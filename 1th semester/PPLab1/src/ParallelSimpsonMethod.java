@@ -6,25 +6,21 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ParallelSimpsonMethod {
 
-    private static final int MIN_OPERATION_FOR_ONE_THREAD = 1000;
-
-    public double countResultForInput(Input input) {
-        // Определение количества потоков
-        int threadsQuantity = countThreadsQuantityForInput(input);
-
-        // Задачи и потоки
-        List<SimpsonTask> simpsonTasks = new ArrayList<>(threadsQuantity);
-        List<Thread> threads = new ArrayList<>(threadsQuantity);
-
+    public Result countResultForInput(Input input, int threadsQuantity) {
+        // Момент начала работы метода, общее время работы
+        long start = System.currentTimeMillis();
+        
         // Единая глобальная переменная с результатом
         SynchronizedDoubleValue result = new SynchronizedDoubleValue();
-
+        
         if (threadsQuantity == 0) {
             SimpsonTask simpsonTask = new SimpsonTask(input, 0, input.getN(), result);
-            simpsonTasks.add(simpsonTask);
             simpsonTask.run();
-            System.out.println("Total time is " + simpsonTask.getMilliseconds() + " milliseconds");
         } else {
+            // Задачи и потоки
+            List<SimpsonTask> simpsonTasks = new ArrayList<>(threadsQuantity);
+            List<Thread> threads = new ArrayList<>(threadsQuantity);
+            
             // Создание задач для каждого потока и самих потоков
             int forOneThread = (input.getN() + 1) / threadsQuantity;
             for (int i = 0; i < threadsQuantity; i++) {
@@ -53,33 +49,20 @@ public class ParallelSimpsonMethod {
                 throw new RuntimeException(exception);
             }
 
-            int totalTime = 0;
             // Вывод времени, затраченного на работу каждого потока
             for (int i = 0; i < threadsQuantity; i++) {
-                totalTime += simpsonTasks.get(i).getMilliseconds();
                 System.out.println("Thread #" + i + " finished in "
                         + simpsonTasks.get(i).getMilliseconds() + " milliseconds");
             }
-            System.out.println("Total time is " + totalTime + " milliseconds");
         }
 
-        // Расчёт окончательного результата
+        // Расчёт окончательного результата и времени работы
         double h = (input.getB() - input.getA()) / input.getN();
         double factor = h / 3.0;
-        return factor * result.getValue();
-    }
-
-    // Определение количества потоков для распараллевания
-    private int countThreadsQuantityForInput(Input input) {
-        if (true) {
-            return 2;
-        }
-        int availableProcessors = Runtime.getRuntime().availableProcessors();
-        System.out.println("Available processors: " + availableProcessors);
-        int maxThreadsQuantity = Math.max((input.getN() + 1) / MIN_OPERATION_FOR_ONE_THREAD, 1);
-        int threadsQuantity = Math.min(availableProcessors, maxThreadsQuantity);
-        System.out.println("Threads quantity: " + threadsQuantity);
-        return threadsQuantity;
+        double resultValue = factor * result.getValue();
+        long totalTime = System.currentTimeMillis() - start;
+        System.out.println("Total time is " + totalTime + " milliseconds");
+        return new Result(resultValue, totalTime);
     }
 
     // Задача для одного потока
