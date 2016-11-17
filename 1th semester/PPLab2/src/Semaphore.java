@@ -1,4 +1,3 @@
-
 import java.util.ConcurrentModificationException;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -6,10 +5,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Semaphore {
 
-    private final int maxThreadsQuantity;
-    private int enteredThreads = 0;
+    private final int maxThreadsQuantity; // Максимальное количество потоков, которые могут пройти через семафор
+    private int enteredThreads = 0; // Количество потоков, которые прошли через семафор на текущий момент
     private Lock lock;
-    private Condition enteringAllowedCondition;
+    private Condition enteringAllowedCondition; // Объект условия разрешения входа через семафор
 
     public Semaphore(int maxThreadsQuantity) {
         this.maxThreadsQuantity = maxThreadsQuantity;
@@ -21,6 +20,7 @@ public class Semaphore {
         return maxThreadsQuantity;
     }
     
+    // Попытка пройти через семафор
     public boolean tryEnter() {
         lock.lock();
         try {
@@ -34,6 +34,7 @@ public class Semaphore {
         }
     }
     
+    // Вход через семафор
     public void enter() throws InterruptedException {
         lock.lock();
         try {
@@ -46,6 +47,7 @@ public class Semaphore {
         }
     }
     
+    // Выход через семафор
     public void leave() {
         lock.lock();
         try {

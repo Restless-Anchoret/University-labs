@@ -1,16 +1,16 @@
-
 import java.math.BigInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+// Задача для парикмахера
 public class BarberTaskInfo {
 
-    private int clientId;
-    private int factorialNumber;
-    private Integer bitCountResult = null;
+    private int clientId; // Номер посетителя
+    private int factorialNumber; // Число для вычисления факториала
+    private Integer bitCountResult = null; // Результат вычислений
     private Lock resultWaitingLock = new ReentrantLock();
-    private Condition resultWaitingCondition;
+    private Condition resultWaitingCondition; // Объект условия получения результата вычислений
 
     public BarberTaskInfo(int clientId, int factorialNumber) {
         this.clientId = clientId;
@@ -38,6 +38,8 @@ public class BarberTaskInfo {
         return bitCountResult;
     }
     
+    // Запуск решения задачи
+    // Задача заключается в том, чтобы найти количество бит в числе, равном факториалу входного параметра
     public void processTask() {
         BigInteger x = BigInteger.ONE;
         for (int i = 2; i < 50_000; i++) {
