@@ -6,8 +6,8 @@ public class Main {
     private static final long CLIENTS_ENTERING_INTERVAL = 2000; // Интервал времени между появлениями новых посетителей
     
     // Границы интервала, которому принадлежит входной параметр задачи для выполнения
-    private static final int FACTORIAL_NUMBER_MIN_EDGE = 50_000;
-    private static final int FACTORIAL_NUMBER_MAX_EDGE = 150_000;
+    private static final int FACTORIAL_NUMBER_MIN_EDGE = 20_000;
+    private static final int FACTORIAL_NUMBER_MAX_EDGE = 100_000;
     
     public static void main(String[] args) {
         // Создание парикмахерской и запуск её работы

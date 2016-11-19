@@ -42,11 +42,11 @@ public class BarberTaskInfo {
     // Задача заключается в том, чтобы найти количество бит в числе, равном факториалу входного параметра
     public void processTask() {
         BigInteger x = BigInteger.ONE;
-        for (int i = 2; i < 50_000; i++) {
+        for (int i = 2; i < this.factorialNumber; i++) {
             x = x.multiply(BigInteger.valueOf(i));
         }
         bitCountResult = x.bitCount();
-        System.out.println("Barber finished task for client #" + clientId + "; the result is: " + bitCountResult);
+        System.out.println("Парикмахер завершил работу с клиентом #" + clientId + "; результат: " + bitCountResult);
     }
 
 }
