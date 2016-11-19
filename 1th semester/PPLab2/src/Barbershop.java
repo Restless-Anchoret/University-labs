@@ -74,6 +74,7 @@ public class Barbershop {
                     clientsWaitingLock.lock();
                     try {
                         while ((currentBarberTaskInfo = tasksQueue.poll()) == null) {
+                            System.out.println("Очередь пуста. Парикмахер засыпает.");
                             clientsWaitingCondition.await();
                         }
                     } finally {
