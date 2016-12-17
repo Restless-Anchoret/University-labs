@@ -13,12 +13,14 @@ import utils.Point;
 public class Main {
 
     public static void main(String[] args) {
-//        Segment firstSegment = new Segment(new Point(-2, 0), new Point(2, 0));
+//        Segment firstSegment = new Segment(new Point(0, 0), new Point(0, 0));
 //        Segment secondSegment = new Segment(new Point(0, -2), new Point(0, 2));
 //        SegmentsIntersection segmentsIntersection = SegmentsIntersector
 //                .findSegmentsIntersection(firstSegment, secondSegment);
 //        System.out.println(segmentsIntersection.getIntersectionResult());
 //        System.out.println(segmentsIntersection.getIntersection());
+//        System.out.println(segmentsIntersection.getFirstIntersectionEndPoint());
+//        System.out.println(segmentsIntersection.getSecondIntersectionEndPoint());
         EventQueue.invokeLater(() -> {
             MainController mainController = new MainController(
                     new UnionAlgorithmImplementation(),

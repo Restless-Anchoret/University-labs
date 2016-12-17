@@ -223,25 +223,5 @@ public class AlternativeUnionAlgorithmImplementation implements UnionAlgorithm {
             this.value = value;
         }
     }
-    
-    private static class PointWithDirection implements Comparable<PointWithDirection> {
-        public Point point;
-        public Direction direction;
-
-        public PointWithDirection(Point point, Direction direction) {
-            this.point = point;
-            this.direction = direction;
-        }
-
-        @Override
-        public int compareTo(PointWithDirection other) {
-            int pointsComparingResult = this.point.compareTo(other.point);
-            if (pointsComparingResult != 0) {
-                return pointsComparingResult;
-            } else {
-                return Integer.compare(this.direction.value, other.direction.value);
-            }
-        }
-    }
 
 }

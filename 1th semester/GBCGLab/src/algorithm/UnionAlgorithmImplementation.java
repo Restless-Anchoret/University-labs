@@ -2,15 +2,13 @@ package algorithm;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
+import java.util.TreeSet;
 import utils.Edge;
-import utils.LabConstants;
 import utils.Point;
 import utils.PointsWithEdges;
 import utils.Segment;
@@ -70,7 +68,7 @@ public class UnionAlgorithmImplementation implements UnionAlgorithm {
             doubleArea += secondPoint.substract(firstPoint)
                     .countDeterminantWithPoint(thirdPoint.substract(firstPoint));
         }
-        if (doubleArea < 0.0) {
+        if (doubleArea > 0.0) {
             return pointsSequence;
         } else {
             List<Point> rotatedPointsSequence = new ArrayList<>(pointsSequence.size());
@@ -91,8 +89,9 @@ public class UnionAlgorithmImplementation implements UnionAlgorithm {
             Comparator<Point> pointsComparator = 
                     (mainSegment.getFirstPoint().compareTo(mainSegment.getSecondPoint()) < 0 ?
                     Comparator.naturalOrder() : Comparator.reverseOrder());
-            Map<Point, List<Direction>> pointsToDirections = new TreeMap<>(pointsComparator);
-            addDirectionToMapForPoint(pointsToDirections, mainSegment.getFirstPoint(), Direction.RIGHT_DIRECTION);
+            Set<Point> foundPoints = new TreeSet<>(pointsComparator);
+            foundPoints.add(mainSegment.getFirstPoint());
+            foundPoints.add(mainSegment.getSecondPoint());
             for (int j = 0; j < divisionSegmentsQuantity; j++) {
                 Segment divisionSegment = new Segment(divisionPolygon.get(j),
                         divisionPolygon.get((j + 1) % divisionSegmentsQuantity));
@@ -100,81 +99,42 @@ public class UnionAlgorithmImplementation implements UnionAlgorithm {
                         .findSegmentsIntersection(mainSegment, divisionSegment);
                 switch (segmentsIntersection.getIntersectionResult()) {
                     case INTERSECT_AT_POINT_TURNING_RIGHT:
-                        addDirectionToMapForPoint(pointsToDirections,
-                                segmentsIntersection.getIntersection(), Direction.LEFT_DIRECTION);
-                        break;
                     case INTERSECT_AT_POINT_TURNING_LEFT:
-                        addDirectionToMapForPoint(pointsToDirections,
-                                segmentsIntersection.getIntersection(), Direction.RIGHT_DIRECTION);
+                        foundPoints.add(segmentsIntersection.getIntersection());
                         break;
                     case INTERSECT_AT_SEGMENT:
-                        addDirectionToMapForPoint(pointsToDirections,
-                                segmentsIntersection.getFirstIntersectionEndPoint(), Direction.INNER_DIRECTION);
-                        addDirectionToMapForPoint(pointsToDirections,
-                                segmentsIntersection.getSecondIntersectionEndPoint(), Direction.INNER_DIRECTION);
+                        foundPoints.add(segmentsIntersection.getFirstIntersectionEndPoint());
+                        foundPoints.add(segmentsIntersection.getSecondIntersectionEndPoint());
                         break;
                 }
             }
-            addDirectionToMapForPoint(pointsToDirections, mainSegment.getSecondPoint(), Direction.LEFT_DIRECTION);
-            if (pointsToDirections.size() == 2) {
-                if (!isPointInsidePolygon(mainSegment.getFirstPoint(), divisionPolygon)) {
-                    segmentsList.add(mainSegment);
-                }
-            } else {
-                Point previousPoint = null;
-                for (Point currentPoint: pointsToDirections.keySet()) {
-                    if (previousPoint != null) {
-                        List<Direction> previousDirections = pointsToDirections.get(previousPoint);
-                        Direction previousLastDirection = previousDirections.get(previousDirections.size() - 1);
-                        List<Direction> currentDirections = pointsToDirections.get(currentPoint);
-                        Direction currentFirstDirection = currentDirections.get(0);
-                        if (previousLastDirection == Direction.RIGHT_DIRECTION &&
-                                currentFirstDirection == Direction.LEFT_DIRECTION ||
-                                previousLastDirection == Direction.INNER_DIRECTION &&
-                                currentFirstDirection == Direction.INNER_DIRECTION) {
-                            segmentsList.add(new Segment(previousPoint, currentPoint));
-                        }
+            Point previousPoint = null;
+            for (Point currentPoint: foundPoints) {
+                if (previousPoint != null) {
+                    Point middlePoint = new Point((previousPoint.getX() + currentPoint.getX()) / 2.0,
+                            (previousPoint.getY() + currentPoint.getY()) / 2.0);
+                    PointToPolygonBelongingAlgorithm.PointLocation pointLocation =
+                            PointToPolygonBelongingAlgorithm.findPointLocationInRelationToPolygon(middlePoint, divisionPolygon);
+                    if (pointLocation != PointToPolygonBelongingAlgorithm.PointLocation.INSIDE_POLYGON) {
+                        segmentsList.add(new Segment(previousPoint, currentPoint));
                     }
-                    previousPoint = currentPoint;
                 }
+                previousPoint = currentPoint;
             }
         }
         return segmentsList;
     }
     
-    private void addDirectionToMapForPoint(Map<Point, List<Direction>> map, Point point, Direction direction) {
-        if (!map.containsKey(point)) {
-            map.put(point, new ArrayList<>());
-        }
-        map.get(point).add(direction);
-    }
-    
-    private boolean isPointInsidePolygon(Point point, List<Point> polygonPoints) {
-        double polygonDoubleArea = 0.0;
-        Point startPoint = polygonPoints.get(0);
-        for (int i = 1; i < polygonPoints.size() - 1; i++) {
-            Point firstPoint = polygonPoints.get(i);
-            Point secondPoint = polygonPoints.get(i + 1);
-            polygonDoubleArea += Math.abs(firstPoint.substract(startPoint)
-                    .countDeterminantWithPoint(secondPoint.substract(startPoint)));
-        }
-        double polygonWithPointDoubleArea = 0.0;
-        for (int i = 0; i < polygonPoints.size(); i++) {
-            Point firstPoint = polygonPoints.get(i);
-            Point secondPoint = polygonPoints.get((i + 1) % polygonPoints.size());
-            polygonWithPointDoubleArea += Math.abs(firstPoint.substract(point)
-                    .countDeterminantWithPoint(secondPoint.substract(point)));
-        }
-        return Math.abs(polygonWithPointDoubleArea - polygonDoubleArea) < LabConstants.EPSILON;
-    }
-    
     private PointsWithEdges mergePolygonsParts(List<Segment> firstPolygonPart,
             List<Segment> secondPolygonPart) {
-        Set<Segment> segmentsSet = convertToSetExceptingOddSegments(firstPolygonPart, secondPolygonPart);
+        Set<Segment> segmentsSet = new HashSet<>();
+        segmentsSet.addAll(firstPolygonPart);
+        segmentsSet.addAll(secondPolygonPart);
+
         List<Point> points = new ArrayList<>();
-        List<Edge> edges = new ArrayList<>();
+        Set<Edge> edgesSet = new HashSet<>();
         
-        Map<Point, Integer> pointsToIndices = new HashMap<>();
+        Map<Point, Integer> pointsToIndices = new TreeMap<>();
         int indexCounter = 0;
         
         for (Segment segment: segmentsSet) {
@@ -194,54 +154,16 @@ public class UnionAlgorithmImplementation implements UnionAlgorithm {
                 points.add(secondPoint);
                 indexCounter++;
             }
-            edges.add(new Edge(firstPointIndex, secondPointIndex));
-        }
-        return new PointsWithEdges(edges, points);
-    }
-    
-    private Set<Segment> convertToSetExceptingOddSegments(List<Segment> firstList, List<Segment> secondList) {
-        Set<Segment> reversedSecondSet = secondList.stream()
-                .map(segment -> new Segment(segment.getSecondPoint(), segment.getFirstPoint()))
-                .collect(Collectors.toSet());
-        Set<Segment> segmentsToExcept = new HashSet<>(firstList);
-        segmentsToExcept.retainAll(reversedSecondSet);
-        Set<Segment> resultSet = new HashSet<>();
-        resultSet.addAll(firstList);
-        resultSet.addAll(secondList);
-        resultSet.removeAll(segmentsToExcept);
-        return resultSet;
-    }
-    
-    private static enum Direction {
-        LEFT_DIRECTION(1),
-        INNER_DIRECTION(2),
-        RIGHT_DIRECTION(3);
-        
-        public int value;
-
-        private Direction(int value) {
-            this.value = value;
-        }
-    }
-    
-    private static class PointWithDirection implements Comparable<PointWithDirection> {
-        public Point point;
-        public Direction direction;
-
-        public PointWithDirection(Point point, Direction direction) {
-            this.point = point;
-            this.direction = direction;
-        }
-
-        @Override
-        public int compareTo(PointWithDirection other) {
-            int pointsComparingResult = this.point.compareTo(other.point);
-            if (pointsComparingResult != 0) {
-                return pointsComparingResult;
+            Edge reversedEdge = new Edge(secondPointIndex, firstPointIndex);
+            if (edgesSet.contains(reversedEdge)) {
+                edgesSet.remove(reversedEdge);
             } else {
-                return Integer.compare(this.direction.value, other.direction.value);
+                edgesSet.add(new Edge(firstPointIndex, secondPointIndex));
             }
         }
+        
+        List<Edge> edges = new ArrayList<>(edgesSet);
+        return new PointsWithEdges(edges, points);
     }
 
 }
