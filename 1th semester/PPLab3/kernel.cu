@@ -37,7 +37,7 @@ __global__ void findNonZeroColumn(Matrix m, int row, int * nonZeroCol) {
 
 // прибавляем к столбцу другой без 0 на диагонали
 __global__ void noralizeColum(Matrix m, int to, int from) {
-	int row = threadIdx.x;
+	int row = blockIdx.x*blockDim.x + threadIdx.x;
 	if (row < m.dim) {
 		m.elements[m.dim*row + to] += m.elements[m.dim*row + from];
 	}
@@ -57,9 +57,11 @@ __global__ void updateMatrix(Matrix m, int diag) {
 }
 
 // делим строку на элемент на главной дагонали
-__global__ void devideRow(Matrix m, int row) {
-	int col = threadIdx.x;
-	m.elements[m.dim*row + col] = m.elements[m.dim*row + col] / m.elements[m.dim*row + row];
+__global__ void divideRow(Matrix m, int row) {
+	int col = blockIdx.x*blockDim.x + threadIdx.x;
+	if (col < m.dim) {
+		m.elements[m.dim*row + col] = m.elements[m.dim*row + col] / m.elements[m.dim*row + row];
+	}
 }
 
 int main()
@@ -85,7 +87,7 @@ int main()
 			}
 		}
 	}
-
+	
 	getDet(m);
 
 	cout << "Total time " << clock() - beginTime << endl << endl;
@@ -150,23 +152,23 @@ cudaError_t getDet(const Matrix matrix)
 			findNonZeroColumn << <blockNum, THREADS_NUM >> >(cMatrix, i, nonZeroColumn);
 			cudaDeviceSynchronize();
 			cudaMemcpy(&hNonZeroCol, nonZeroColumn, sizeof(int), cudaMemcpyDeviceToHost);
-			diagElem = getElemFormcMatrix(cMatrix, i, i);
+			diagElem = getElemFormcMatrix(cMatrix, i, hNonZeroCol);
 			if (hNonZeroCol != -1 && fabs(diagElem) > EPS) {
 				cout << "hNonZeroCol " << hNonZeroCol << endl;
-				noralizeColum << <1, MATRIX_DIM >> >(cMatrix, i, hNonZeroCol);
+				noralizeColum << <ceil((double)MATRIX_DIM / THREADS_NUM), THREADS_NUM >> >(cMatrix, i, hNonZeroCol);
 				cudaDeviceSynchronize();
 
 			}
 			else {
 				det = 0;
-				cout << "No non zero" << endl;
+				cout << "No non zero " << hNonZeroCol << endl;
 				break;
 			}
 		}
 
 		det = det * diagElem;
 		//cout << "de " <<  diagElem << endl;
-		devideRow << <1, MATRIX_DIM >> >(cMatrix, i);
+		divideRow << <ceil((double)MATRIX_DIM / THREADS_NUM), THREADS_NUM >> >(cMatrix, i);
 		cudaDeviceSynchronize();
 
 		int columsNum = MATRIX_DIM - i; // число столбцов для обработки
@@ -184,7 +186,7 @@ cudaError_t getDet(const Matrix matrix)
 	/*cudaStatus = cudaGetLastError();
 	if (cudaStatus != cudaSuccess) {
 	fprintf(stderr, "addKernel launch failed: %s\n", cudaGetErrorString(cudaStatus));
-	goto Error;
+	//goto Error;
 	}*/
 
 	// cudaDeviceSynchronize waits for the kernel to finish, and returns
