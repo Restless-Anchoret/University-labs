@@ -1,0 +1,36 @@
+﻿Сборка начата 25.12.2016 16:58:20.
+     1>Проект "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\PPLab3.vcxproj" в узле 2 (целевые объекты Build).
+     1>AddCudaCompileDeps:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /DWIN32 /D_DEBUG /D_CONSOLE /D_MBCS /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" /I. /FIcuda_runtime.h /c "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\kernel.cu" 
+     1>Проект "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\PPLab3.vcxproj" (1) выполняет сборку "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\PPLab3.vcxproj" (1:2) в узле 2 (целевые объекты CudaBuildCore).
+     1>CudaBuildCore:
+         Compiling CUDA source file kernel.cu...
+         cmd.exe /C "C:\Users\Windows\AppData\Local\Temp\tmp14b68e8162cd48529fab6cb6546b49b9.cmd"
+         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2013 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -DWIN32 -D_DEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -o Debug\kernel.cu.obj "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\kernel.cu"
+         
+         D:\DenDroiD\Java\UniLabs\1th semester\PPLab3>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2013 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -DWIN32 -D_DEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -o Debug\kernel.cu.obj "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\kernel.cu" 
+     1>D:/DenDroiD/Java/UniLabs/1th semester/PPLab3/kernel.cu(125): warning : variable "tmp" was declared but never referenced
+     1>D:/DenDroiD/Java/UniLabs/1th semester/PPLab3/kernel.cu(125): warning : variable "tmp" was declared but never referenced
+     1>CUDACOMPILE : nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+         kernel.cu
+     1>D:/DenDroiD/Java/UniLabs/1th semester/PPLab3/kernel.cu(67): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+     1>D:/DenDroiD/Java/UniLabs/1th semester/PPLab3/kernel.cu(148): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+     1>D:/DenDroiD/Java/UniLabs/1th semester/PPLab3/kernel.cu(175): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+     1>D:/DenDroiD/Java/UniLabs/1th semester/PPLab3/kernel.cu(125): warning C4101: tmp: неиспользованная локальная переменная
+     1>Сборка проекта "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\PPLab3.vcxproj" завершена (целевые объекты CudaBuildCore).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\Debug\PPLab3.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\Win32" cudart.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\Debug\PPLab3.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\Debug\PPLab3.lib" /MACHINE:X86 Debug\kernel.cu.obj
+         PPLab3.vcxproj -> D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\Debug\PPLab3.exe
+       PostBuildEvent:
+         echo copy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\cudart*.dll" "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\Debug\"
+         copy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\cudart*.dll" "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\Debug\"
+         :VCEnd
+         copy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\cudart*.dll" "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\Debug\"
+         C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\cudart32_80.dll
+         C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\cudart64_80.dll
+         Скопировано файлов:         2.
+     1>Сборка проекта "D:\DenDroiD\Java\UniLabs\1th semester\PPLab3\PPLab3.vcxproj" завершена (целевые объекты Build).
+
+Сборка успешно завершена.
+
+Затраченное время: 00:00:04.86
