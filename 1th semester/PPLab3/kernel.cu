@@ -22,7 +22,7 @@ cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size);
 cudaError_t getDet(const Matrix matrix);
 
 
-//поиск ненулевого столбца, начиная с позиции start в строке с номером row
+// Поиск ненулевого столбца, начиная с позиции start в строке с номером row
 __global__ void findNonZeroColumn(Matrix m, int row, int * nonZeroCol) {
 	if (*nonZeroCol != -1) {
 		int col = blockIdx.x * blockDim.x + threadIdx.x + row;
@@ -35,32 +35,40 @@ __global__ void findNonZeroColumn(Matrix m, int row, int * nonZeroCol) {
 	}
 }
 
-// прибавляем к столбцу другой без 0 на диагонали
-__global__ void noralizeColum(Matrix m, int to, int from) {
-	int row = blockIdx.x*blockDim.x + threadIdx.x;
+// Прибавляем к столбцу другой без 0 на диагонали
+__global__ void normalizeColumn(Matrix m, int to, int from) {
+	int row = blockIdx.x * blockDim.x + threadIdx.x;
 	if (row < m.dim) {
 		m.elements[m.dim*row + to] += m.elements[m.dim*row + from];
 	}
 }
 
-// зануляем нижнюю половину столбца
-__global__ void updateMatrix(Matrix m, int diag) {
-	int subdim = m.dim - diag;
-	int row = blockIdx.x*blockDim.x / subdim + diag + 1;
-	int col = blockIdx.x*blockDim.x % subdim + threadIdx.x + diag;
-	if (col < m.dim) {
-		double val = m.elements[m.dim*row + col];
-		double diff = m.elements[m.dim*row + diag] * m.elements[m.dim*diag + col];
-		__syncthreads();
-		m.elements[m.dim*row + col] = val - diff;
-	}
-}
-
-// делим строку на элемент на главной дагонали
+// Делим строку на элемент на главной дагонали
 __global__ void divideRow(Matrix m, int row) {
 	int col = blockIdx.x*blockDim.x + threadIdx.x;
 	if (col < m.dim) {
 		m.elements[m.dim*row + col] = m.elements[m.dim*row + col] / m.elements[m.dim*row + row];
+	}
+}
+
+// Вычитаем строку diag из всех строк матрицы ниже diag, умножая их на элемент в столбце diag
+__global__ void updateMatrix(Matrix m, int diag) {
+	int subdim = m.dim - diag - 1;
+	int index = blockIdx.x*blockDim.x + threadIdx.x;
+	int row = index / subdim + diag + 1;
+	int col = index % subdim + diag + 1;
+	if (row < m.dim && col < m.dim) {
+		double val = m.elements[m.dim*row + col];
+		double diff = m.elements[m.dim*row + diag] * m.elements[m.dim*diag + col];
+		m.elements[m.dim*row + col] = val - diff;
+	}
+}
+
+// Зануляем столбец матрицы ниже заданного элемента
+__global__ void putZeros(Matrix m, int diag) {
+	int row = blockIdx.x*blockDim.x + threadIdx.x + diag + 1;
+	if (row < m.dim) {
+		m.elements[m.dim*row + diag] = 0;
 	}
 }
 
@@ -70,7 +78,6 @@ int main()
 	unsigned int beginTime = clock();
 	Matrix m;
 	m.dim = MATRIX_DIM;
-	//m.elements = new double[MATRIX_DIM*MATRIX_DIM] { 0, 2, 0, 1, 4, 3, 1, 5, 10};
 
 	m.elements = new double[MATRIX_DIM*MATRIX_DIM];
 	for (int i = 0; i < MATRIX_DIM; i++) {
@@ -96,20 +103,14 @@ int main()
 	return 0;
 }
 
-void showMat(double* tmp, string st = "") {
-	cout << st << endl;
-	for (int i = 0; i < MATRIX_DIM * MATRIX_DIM; i++) {
-		cout << tmp[i] << ' ';
-	}
-	cout << endl;
-}
-
+// Получить элемент из матрицы Cuda
 double getElemFormcMatrix(Matrix cm, int x, int y) {
 	double tmp;
 	cudaMemcpy(&tmp, cm.elements + x*cm.dim + y, sizeof(double), cudaMemcpyDeviceToHost);
 	return tmp;
 }
 
+// Перевести матрицу из оперативной памяти в матрицу Cuda
 Matrix getCudaMatrixByHostMatrix(Matrix matrix) {
 	Matrix cMatrix;
 	cMatrix.dim = matrix.dim;
@@ -119,12 +120,12 @@ Matrix getCudaMatrixByHostMatrix(Matrix matrix) {
 	return cMatrix;
 }
 
+// Вычисление определителя
 cudaError_t getDet(const Matrix matrix)
 {
 	Matrix cMatrix = getCudaMatrixByHostMatrix(matrix);
 	double det = 1;
 	cudaError_t cudaStatus;
-	double tmp[9];
 
 	int *nonZeroColumn;
 	cudaMalloc(&nonZeroColumn, sizeof(int));
@@ -139,13 +140,9 @@ cudaError_t getDet(const Matrix matrix)
 	double diagElem;
 
 	for (int i = 0; i < MATRIX_DIM; i++) {
-
 		diagElem = getElemFormcMatrix(cMatrix, i, i);
 
-		//cudaMemcpy(tmp, cMatrix.elements, sizeof(double) * MATRIX_DIM * MATRIX_DIM, cudaMemcpyDeviceToHost);
-		//showMat(tmp, "begin");
 		if (fabs(diagElem) < EPS) {
-
 			int hNonZeroCol = -1;
 			int blockNum = ceil((double)(MATRIX_DIM - i) / THREADS_NUM);
 			cudaMemset(&nonZeroColumn, -1, sizeof(int));
@@ -155,11 +152,9 @@ cudaError_t getDet(const Matrix matrix)
 			diagElem = getElemFormcMatrix(cMatrix, i, hNonZeroCol);
 			if (hNonZeroCol != -1 && fabs(diagElem) > EPS) {
 				cout << "hNonZeroCol " << hNonZeroCol << endl;
-				noralizeColum << <ceil((double)MATRIX_DIM / THREADS_NUM), THREADS_NUM >> >(cMatrix, i, hNonZeroCol);
+				normalizeColumn << <ceil((double)MATRIX_DIM / THREADS_NUM), THREADS_NUM >> >(cMatrix, i, hNonZeroCol);
 				cudaDeviceSynchronize();
-
-			}
-			else {
+			} else {
 				det = 0;
 				cout << "No non zero " << hNonZeroCol << endl;
 				break;
@@ -167,27 +162,28 @@ cudaError_t getDet(const Matrix matrix)
 		}
 
 		det = det * diagElem;
-		//cout << "de " <<  diagElem << endl;
-		divideRow << <ceil((double)MATRIX_DIM / THREADS_NUM), THREADS_NUM >> >(cMatrix, i);
-		cudaDeviceSynchronize();
 
-		int columsNum = MATRIX_DIM - i; // число столбцов для обработки
-		int rowNum = columsNum - 1; // число строк для обработки
-		int threads = columsNum < THREADS_NUM ? columsNum : THREADS_NUM;
-		int blocks = rowNum * ceil(double(columsNum) / threads);
-
-		updateMatrix << < blocks, threads >> >(cMatrix, i);
-		cudaDeviceSynchronize();
+		if (i != MATRIX_DIM - 1) {
+			divideRow << <ceil((double)MATRIX_DIM / THREADS_NUM), THREADS_NUM >> >(cMatrix, i);
+			cudaDeviceSynchronize();
+			
+			int columsNum = MATRIX_DIM - i - 1; // число столбцов для обработки
+			int rowNum = columsNum; // число строк для обработки
+			int threads = columsNum < THREADS_NUM ? columsNum : THREADS_NUM;
+			int blocks = ceil(double(rowNum * columsNum) / threads);
+			
+			updateMatrix << < blocks, threads >> >(cMatrix, i);
+			cudaDeviceSynchronize();
+			
+			threads = rowNum < THREADS_NUM ? rowNum : THREADS_NUM;
+			blocks = ceil(double(rowNum) / threads);
+			
+			putZeros << < blocks, threads >> >(cMatrix, i);
+			cudaDeviceSynchronize();
+		}
 	}
 
 	cout << "Det = " << det << endl;
-
-	// Check for any errors launching the kernel
-	/*cudaStatus = cudaGetLastError();
-	if (cudaStatus != cudaSuccess) {
-	fprintf(stderr, "addKernel launch failed: %s\n", cudaGetErrorString(cudaStatus));
-	//goto Error;
-	}*/
 
 	// cudaDeviceSynchronize waits for the kernel to finish, and returns
 	// any errors encountered during the launch.
