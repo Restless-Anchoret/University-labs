@@ -22,7 +22,7 @@ cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size);
 cudaError_t getDet(const Matrix matrix);
 
 
-//поиск ненулевого столбца, начиная с позиции start в строке с номером row
+//РїРѕРёСЃРє РЅРµРЅСѓР»РµРІРѕРіРѕ СЃС‚РѕР»Р±С†Р°, РЅР°С‡РёРЅР°СЏ СЃ РїРѕР·РёС†РёРё start РІ СЃС‚СЂРѕРєРµ СЃ РЅРѕРјРµСЂРѕРј row
 __global__ void findNonZeroColumn(Matrix m, int row, int * nonZeroCol) {
 	if (*nonZeroCol != -1) {
 		int col = blockIdx.x * blockDim.x + threadIdx.x + row;
@@ -35,7 +35,7 @@ __global__ void findNonZeroColumn(Matrix m, int row, int * nonZeroCol) {
 	}
 }
 
-// прибавляем к столбцу другой без 0 на диагонали
+// РїСЂРёР±Р°РІР»СЏРµРј Рє СЃС‚РѕР»Р±С†Сѓ РґСЂСѓРіРѕР№ Р±РµР· 0 РЅР° РґРёР°РіРѕРЅР°Р»Рё
 __global__ void noralizeColum(Matrix m, int to, int from) {
 	int row = threadIdx.x;
 	if (row < m.dim) {
@@ -43,7 +43,7 @@ __global__ void noralizeColum(Matrix m, int to, int from) {
 	}
 }
 
-// зануляем нижнюю половину столбца
+// Р·Р°РЅСѓР»СЏРµРј РЅРёР¶РЅСЋСЋ РїРѕР»РѕРІРёРЅСѓ СЃС‚РѕР»Р±С†Р°
 __global__ void updateMatrix(Matrix m, int diag) {
 	int subdim = m.dim - diag;
 	int row = blockIdx.x*blockDim.x / subdim + diag + 1;
@@ -56,7 +56,7 @@ __global__ void updateMatrix(Matrix m, int diag) {
 	}
 }
 
-// делим строку на элемент на главной дагонали
+// РґРµР»РёРј СЃС‚СЂРѕРєСѓ РЅР° СЌР»РµРјРµРЅС‚ РЅР° РіР»Р°РІРЅРѕР№ РґР°РіРѕРЅР°Р»Рё
 __global__ void devideRow(Matrix m, int row) {
 	int col = threadIdx.x;
 	m.elements[m.dim*row + col] = m.elements[m.dim*row + col] / m.elements[m.dim*row + row];
@@ -169,8 +169,8 @@ cudaError_t getDet(const Matrix matrix)
 		devideRow << <1, MATRIX_DIM >> >(cMatrix, i);
 		cudaDeviceSynchronize();
 
-		int columsNum = MATRIX_DIM - i; // число столбцов для обработки
-		int rowNum = columsNum - 1; // число строк для обработки
+		int columsNum = MATRIX_DIM - i; // С‡РёСЃР»Рѕ СЃС‚РѕР»Р±С†РѕРІ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё
+		int rowNum = columsNum - 1; // С‡РёСЃР»Рѕ СЃС‚СЂРѕРє РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё
 		int threads = columsNum < THREADS_NUM ? columsNum : THREADS_NUM;
 		int blocks = rowNum * ceil(double(columsNum) / threads);
 
