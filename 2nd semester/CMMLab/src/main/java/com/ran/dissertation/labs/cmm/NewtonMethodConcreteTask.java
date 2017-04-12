@@ -1,11 +1,11 @@
 package com.ran.dissertation.labs.cmm;
 
-import java.util.function.DoubleFunction;
+import java.util.Arrays;
 
 public class NewtonMethodConcreteTask {
 
-    public DoubleFunction<Double> solve() {
-        return x -> x;
+    public ConcreteTaskDecision solve() {
+        return new ConcreteTaskDecision(x -> x, Arrays.asList());
     }
 
 }
