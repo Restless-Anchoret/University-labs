@@ -3,6 +3,7 @@ package com.ran.dissertation.labs.lab1;
 import com.ran.dissertation.algebraic.function.DoubleFunction;
 import com.ran.dissertation.algebraic.vector.SingleDouble;
 import com.ran.dissertation.factories.*;
+import com.ran.dissertation.labs.cmm.NewtonMethodConcreteTask;
 import com.ran.dissertation.world.Camera;
 import com.ran.dissertation.world.DisplayableObject;
 import com.ran.dissertation.world.Orientation;
@@ -44,8 +45,7 @@ public class LabFirstWorldFactory {
     }
     
     private Function<Double, SingleDouble> getFunction() {
-        return x -> new SingleDouble(Math.cos(Math.cos(Math.cos(Math.cos(
-                x * x * x * x)))) * 3.0 / (x * x * x));
+        return x -> new SingleDouble(new NewtonMethodConcreteTask().solve().apply(x));
     }
     
 }
