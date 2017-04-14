@@ -27,7 +27,7 @@ public class LabFirstWorldFactory {
 
     private ConcreteTaskDecision getConcreteTaskDecision() {
         if (concreteTaskDecision == null) {
-            concreteTaskDecision = new NewtonMethodConcreteTask().solve();
+            concreteTaskDecision = new NewtonMethodConcreteTask().solve(2, 6);
         }
         return concreteTaskDecision;
     }
@@ -42,7 +42,7 @@ public class LabFirstWorldFactory {
         double right = camera.getPosition().getX() + halfWidth;
         ConcreteTaskDecision taskDecision = getConcreteTaskDecision();
         DoubleFunction<SingleDouble> exactDecisionFunction = new DoubleFunction<>(
-                x -> new SingleDouble(taskDecision.getExactDecision().apply(x)),
+                x -> new SingleDouble(taskDecision.getExactSolution().apply(x)),
                 0.0, 1.0);
         List<DisplayableObject> displayableObjects = new ArrayList<>();
         displayableObjects.addAll(Arrays.asList(

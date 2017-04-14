@@ -5,16 +5,16 @@ import java.util.function.DoubleFunction;
 
 public class ConcreteTaskDecision {
 
-    private DoubleFunction<Double> exactDecision;
+    private DoubleFunction<Double> exactSolution;
     private List<DoubleFunction<Double>> approximations;
 
-    public ConcreteTaskDecision(DoubleFunction<Double> exactDecision, List<DoubleFunction<Double>> approximations) {
-        this.exactDecision = exactDecision;
+    public ConcreteTaskDecision(DoubleFunction<Double> exactSolution, List<DoubleFunction<Double>> approximations) {
+        this.exactSolution = exactSolution;
         this.approximations = approximations;
     }
 
-    public DoubleFunction<Double> getExactDecision() {
-        return exactDecision;
+    public DoubleFunction<Double> getExactSolution() {
+        return exactSolution;
     }
 
     public List<DoubleFunction<Double>> getApproximations() {

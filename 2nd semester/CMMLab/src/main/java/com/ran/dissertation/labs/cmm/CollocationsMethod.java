@@ -6,8 +6,6 @@ import java.util.function.DoubleFunction;
 
 public class CollocationsMethod {
 
-    private static final double DERIVATIVE_EPSILON = 1e-8;
-
     public DoubleFunction<Double> solve(
             DoubleFunction<Double> p,
             DoubleFunction<Double> q,
@@ -23,9 +21,9 @@ public class CollocationsMethod {
             DoubleFunction<Double> legendrePolynom = legendrePolynomsFactory.getLegendrePolynomOfDegree(i);
             DoubleFunction<Double> currentPolynom = u -> (u + 1.0) * (1.0 - u) * legendrePolynom.apply(u);
             e.add(currentPolynom);
-            DoubleFunction<Double> firstDerivative = getDerivative(currentPolynom);
+            DoubleFunction<Double> firstDerivative = DerivativeGetter.getInstance().getDerivative(currentPolynom);
             eI.add(firstDerivative);
-            DoubleFunction<Double> secondDerivative = getDerivative(firstDerivative);
+            DoubleFunction<Double> secondDerivative = DerivativeGetter.getInstance().getDerivative(firstDerivative);
             eII.add(secondDerivative);
         }
         double[][] a = new double[n][n];
@@ -40,10 +38,6 @@ public class CollocationsMethod {
         }
         double[] solutionCoordinates = new GaussMethod().solve(a, f, n);
         return getLinearCombination(solutionCoordinates, e);
-    }
-
-    private DoubleFunction<Double> getDerivative(DoubleFunction<Double> function) {
-        return t -> (function.apply(t + DERIVATIVE_EPSILON) - function.apply(t)) / DERIVATIVE_EPSILON;
     }
 
     private DoubleFunction<Double> getLinearCombination(double[] a, List<DoubleFunction<Double>> e) {
