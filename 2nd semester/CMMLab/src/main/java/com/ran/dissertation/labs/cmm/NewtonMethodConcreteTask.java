@@ -6,11 +6,14 @@ import java.util.function.DoubleFunction;
 
 public class NewtonMethodConcreteTask {
 
+    private CollocationsMethod collocationsMethod = new CollocationsMethod();
+
     public ConcreteTaskDecision solve(int iterations, int collocationsMethodDegree) {
-        CollocationsMethod collocationsMethod = new CollocationsMethod();
         DoubleFunction<Double> exactSolution = t -> -Math.sqrt(1 - t * t);
         List<DoubleFunction<Double>> approximations = new ArrayList<>(iterations + 1);
 
+//        DoubleFunction<Double> y0NotConverted = t -> t * t - t;
+//        DoubleFunction<Double> y0 = t -> y0NotConverted.apply((t + 1) / 2.0);
         DoubleFunction<Double> y0 = t -> 0.0;
         DoubleFunction<Double> currentY = y0;
         approximations.add(currentY);

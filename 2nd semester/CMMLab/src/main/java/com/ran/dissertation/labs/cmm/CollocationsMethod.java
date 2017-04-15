@@ -6,6 +6,8 @@ import java.util.function.DoubleFunction;
 
 public class CollocationsMethod {
 
+    private LegendrePolynomsFactory legendrePolynomsFactory = new LegendrePolynomsFactory();
+
     public DoubleFunction<Double> solve(
             DoubleFunction<Double> p,
             DoubleFunction<Double> q,
@@ -16,7 +18,6 @@ public class CollocationsMethod {
         List<DoubleFunction<Double>> e = new ArrayList<>(n);
         List<DoubleFunction<Double>> eI = new ArrayList<>(n);
         List<DoubleFunction<Double>> eII = new ArrayList<>(n);
-        LegendrePolynomsFactory legendrePolynomsFactory = new LegendrePolynomsFactory();
         for (int i = 0; i < n; i++) {
             DoubleFunction<Double> legendrePolynom = legendrePolynomsFactory.getLegendrePolynomOfDegree(i);
             DoubleFunction<Double> currentPolynom = u -> (u + 1.0) * (1.0 - u) * legendrePolynom.apply(u);
