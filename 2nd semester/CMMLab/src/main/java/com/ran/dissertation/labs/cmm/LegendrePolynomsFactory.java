@@ -32,7 +32,6 @@ public class LegendrePolynomsFactory {
         Polynom resultPolynom = previousPolynom.multiplyByX().multiplyByNumber((double)(2 * n + 1) / (double)(n + 1))
                 .add(beforePreviousPolynom.multiplyByNumber((double)(-n) / (double)(n + 1)));
         polynomMap.put(n, resultPolynom);
-//        System.out.println("Polynom of degree " + n + ": " + resultPolynom);
         return resultPolynom;
     }
 

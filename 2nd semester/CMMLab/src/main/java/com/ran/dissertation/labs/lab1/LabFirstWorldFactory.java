@@ -27,7 +27,7 @@ public class LabFirstWorldFactory {
 
     private ConcreteTaskDecision getConcreteTaskDecision() {
         if (concreteTaskDecision == null) {
-            concreteTaskDecision = new NewtonMethodConcreteTask().solve(2, 6);
+            concreteTaskDecision = new NewtonMethodConcreteTask().solve(0.05, 0.001, 4);
         }
         return concreteTaskDecision;
     }

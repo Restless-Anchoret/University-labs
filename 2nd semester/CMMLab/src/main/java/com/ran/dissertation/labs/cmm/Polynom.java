@@ -5,14 +5,12 @@ import java.util.function.DoubleFunction;
 
 public class Polynom implements DoubleFunction<Double> {
 
+    public static final Polynom ZERO_POLYNOM = new Polynom(new double[] {0.0});
+
     private double[] factors;
 
     public Polynom(double[] factors) {
         this.factors = factors;
-    }
-
-    public double[] getFactors() {
-        return factors;
     }
 
     public double getFactor(int i) {
@@ -67,6 +65,43 @@ public class Polynom implements DoubleFunction<Double> {
             newFactors[i] = this.getFactor(i) + other.getFactor(i);
         }
         return new Polynom(newFactors);
+    }
+
+    public Polynom multiply(Polynom other) {
+        double[] newFactors = new double[this.getDegree() + other.getDegree() + 1];
+        for (int i = 0; i < newFactors.length; i++) {
+            double value = 0.0;
+            for (int j = 0; j <= i; j++) {
+                if (j <= this.getDegree() && i - j <= other.getDegree()) {
+                    value += this.getFactor(j) * other.getFactor(i - j);
+                }
+            }
+            newFactors[i] = value;
+        }
+        return new Polynom(newFactors);
+    }
+
+    public Polynom getDerivative() {
+        if (getDegree() == 0) {
+            return ZERO_POLYNOM;
+        }
+        double[] newFactors = new double[getFactorsQuantity() - 1];
+        for (int i = 0; i < newFactors.length; i++) {
+            newFactors[i] = factors[i + 1] * (i + 1);
+        }
+        return new Polynom(newFactors);
+    }
+
+    public double norm() {
+        double result = 0.0;
+        for (int i = 0; i < getFactorsQuantity(); i++) {
+            result += factors[i] * factors[i];
+        }
+        return Math.sqrt(result);
+    }
+
+    public Polynom normalized() {
+        return this.multiplyByNumber(1.0 / this.norm());
     }
 
     @Override

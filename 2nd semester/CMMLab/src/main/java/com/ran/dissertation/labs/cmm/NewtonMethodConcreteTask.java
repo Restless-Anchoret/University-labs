@@ -8,17 +8,16 @@ public class NewtonMethodConcreteTask {
 
     private CollocationsMethod collocationsMethod = new CollocationsMethod();
 
-    public ConcreteTaskDecision solve(int iterations, int collocationsMethodDegree) {
+    public ConcreteTaskDecision solve(double newtonEpsilon, double collocationsEpsilon,
+                                      int newtonMaxIterations) {
         DoubleFunction<Double> exactSolution = t -> -Math.sqrt(1 - t * t);
-        List<DoubleFunction<Double>> approximations = new ArrayList<>(iterations + 1);
+        List<DoubleFunction<Double>> approximations = new ArrayList<>();
 
-//        DoubleFunction<Double> y0NotConverted = t -> t * t - t;
-//        DoubleFunction<Double> y0 = t -> y0NotConverted.apply((t + 1) / 2.0);
         DoubleFunction<Double> y0 = t -> 0.0;
         DoubleFunction<Double> currentY = y0;
-        approximations.add(currentY);
+        approximations.add(fixApproximation(currentY));
 
-        DoubleFunction<Double> y0I = DerivativeGetter.getInstance().getDerivative(y0);
+        DoubleFunction<Double> y0I = FunctionUtils.getDerivative(y0);
         DoubleFunction<Double> z = t -> 3.0 * (1.0 + 2.0 * y0I.apply(t)) *
                 Math.sqrt(Math.pow(1.0 + 2.0 * y0I.apply(t), 2.0) + 1.0);
 
@@ -26,24 +25,28 @@ public class NewtonMethodConcreteTask {
         DoubleFunction<Double> q = t -> -2.0 * z.apply(t);
         DoubleFunction<Double> r = t -> 0.0;
 
-        for (int i = 0; i < iterations; i++) {
-            DoubleFunction<Double> currentYI = DerivativeGetter.getInstance().getDerivative(currentY);
+        double deviation = Double.MAX_VALUE;
+        int iterations = 0;
+        while (deviation > newtonEpsilon && iterations < newtonMaxIterations) {
+            iterations++;
+            System.out.println("Newton iteration #" + iterations + " started.");
+            DoubleFunction<Double> currentYI = FunctionUtils.getDerivative(currentY);
             DoubleFunction<Double> g = t -> -2.0 * z.apply(t) * currentYI.apply(t) +
                     Math.pow(Math.pow(1.0 + 2.0 * currentYI.apply(t), 2.0) + 1.0, 1.5);
-            DoubleFunction<Double> nextY = collocationsMethod.solve(p, q, r, g, collocationsMethodDegree);
-            approximations.add(nextY);
+            DoubleFunction<Double> nextY = collocationsMethod.solve(p, q, r, g, collocationsEpsilon);
+            DoubleFunction<Double> fixedApproximation = fixApproximation(nextY);
+            approximations.add(fixedApproximation);
+            deviation = FunctionUtils.getDeviation(fixedApproximation, exactSolution, 0.0, 1.0);
+            System.out.println("Newton iteration #" + iterations + ": deviation = " + deviation);
             currentY = nextY;
         }
 
-        List<DoubleFunction<Double>> fixedApproximations = new ArrayList<>(iterations + 1);
-        for (int i = 0; i <= iterations; i++) {
-            DoubleFunction<Double> currentApproximation = approximations.get(i);
-            DoubleFunction<Double> fixedApproximation =
-                    t -> currentApproximation.apply(2.0 * t - 1.0) + (t - 1);
-            fixedApproximations.add(fixedApproximation);
-        }
+        System.out.println("Newton method iterations quantity: " + iterations);
+        return new ConcreteTaskDecision(exactSolution, approximations);
+    }
 
-        return new ConcreteTaskDecision(exactSolution, fixedApproximations);
+    private DoubleFunction<Double> fixApproximation(DoubleFunction<Double> approximation) {
+        return t -> approximation.apply(2.0 * t - 1.0) + (t - 1);
     }
 
 }
