@@ -4,6 +4,7 @@ import com.ran.dissertation.algebraic.function.DoubleFunction;
 import com.ran.dissertation.algebraic.matrix.DoubleMatrix;
 import com.ran.dissertation.algebraic.vector.ThreeDoubleVector;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.function.BiFunction;
 
@@ -17,10 +18,10 @@ public class KinematicSurface extends DisplayableObject {
     private int tSteps, tauSteps;
 
     public KinematicSurface(BiFunction<Double, Double, ThreeDoubleVector> p,
-            double t0, double t1, double tau0, double tau1, int tSteps, int tauSteps) {
-        super(new Figure(Collections.emptyList(), Collections.emptyList()),
-                Orientation.INITIAL_ORIENTATION,
-                Color.BLACK, 1.0f, 2);
+            double t0, double t1, double tau0, double tau1, int tSteps, int tauSteps,
+            Orientation orientation, Color color, float edgePaintWidth, int verticePaintRadius) {
+        super(new Figure(Arrays.asList(ThreeDoubleVector.ZERO_THREE_DOUBLE_VECTOR), Collections.emptyList()),
+                orientation, color, edgePaintWidth, verticePaintRadius);
         this.p = p;
         this.t0 = t0;
         this.t1 = t1;
@@ -31,25 +32,31 @@ public class KinematicSurface extends DisplayableObject {
     }
     
     public KinematicSurface(BiFunction<Double, Double, ThreeDoubleVector> p,
-            double t0, double t1, double tau0, double tau1) {
-        this(p, t0, t1, tau0, tau1, DEFAULT_T_STEPS, DEFAULT_TAU_STEPS);
+            double t0, double t1, double tau0, double tau1,
+            Orientation orientation, Color color, float edgePaintWidth, int verticePaintRadius) {
+        this(p, t0, t1, tau0, tau1, DEFAULT_T_STEPS, DEFAULT_TAU_STEPS,
+                orientation, color, edgePaintWidth, verticePaintRadius);
     }
     
     public KinematicSurface(BiFunction<Double, Double, DoubleMatrix> a,
             DoubleFunction<ThreeDoubleVector> p0,
             DoubleFunction<ThreeDoubleVector> pn,
-            double t0, double t1, double tau0, double tau1, int tSteps, int tauSteps) {
+            double t0, double t1, double tau0, double tau1, int tSteps, int tauSteps,
+            Orientation orientation, Color color, float edgePaintWidth, int verticePaintRadius) {
         this(
                 (t, tau) -> new ThreeDoubleVector(a.apply(t, tau).multiply(p0.apply(tau).getDoubleVector())).add(pn.apply(t)),
-                t0, t1, tau0, tau1, tSteps, tauSteps
+                t0, t1, tau0, tau1, tSteps, tauSteps,
+                orientation, color, edgePaintWidth, verticePaintRadius
         );
     }
     
     public KinematicSurface(BiFunction<Double, Double, DoubleMatrix> a,
             DoubleFunction<ThreeDoubleVector> p0,
             DoubleFunction<ThreeDoubleVector> pn,
-            double t0, double t1, double tau0, double tau1) {
-        this(a, p0, pn, t0, t1, tau0, tau1, DEFAULT_T_STEPS, DEFAULT_TAU_STEPS);
+            double t0, double t1, double tau0, double tau1,
+            Orientation orientation, Color color, float edgePaintWidth, int verticePaintRadius) {
+        this(a, p0, pn, t0, t1, tau0, tau1, DEFAULT_T_STEPS, DEFAULT_TAU_STEPS,
+                orientation, color, edgePaintWidth, verticePaintRadius);
     }
 
     public BiFunction<Double, Double, ThreeDoubleVector> getP() {
