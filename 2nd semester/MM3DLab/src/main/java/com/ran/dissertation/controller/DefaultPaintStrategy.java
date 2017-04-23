@@ -10,6 +10,8 @@ import com.ran.dissertation.ui.ImagePanelPaintStrategy;
 import com.ran.dissertation.ui.PaintDelegate;
 import com.ran.dissertation.world.Camera;
 import com.ran.dissertation.world.DisplayableObject;
+import com.ran.dissertation.world.KinematicSurface;
+import com.ran.dissertation.world.OrientationMapper;
 import com.ran.dissertation.world.World;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +38,15 @@ public class DefaultPaintStrategy implements ImagePanelPaintStrategy {
         if (!displayableObject.isVisible()) {
             return;
         }
+        if (displayableObject instanceof KinematicSurface) {
+            paintKinematicSurface((KinematicSurface)displayableObject, camera, paintDelegate, width, height);
+        } else {
+            paintUsualDisplayableObject(displayableObject, camera, paintDelegate, width, height);
+        }
+    }
+    
+    private void paintUsualDisplayableObject(DisplayableObject displayableObject, Camera camera,
+            PaintDelegate paintDelegate, int width, int height) {
         List<TwoIntVector> displayCoordinates = convertWorldCoordinatesToDiplayCoordinates(
                 displayableObject.getCurrentFigureVertices(), camera, width, height);
         for (Pair<Integer, Integer> figureEdge: displayableObject.getFigure().getFigureEdges()) {
@@ -53,6 +64,55 @@ public class DefaultPaintStrategy implements ImagePanelPaintStrategy {
                         displayableObject.getColor());
             }
         }
+    }
+    
+    private void paintKinematicSurface(KinematicSurface kinematicSurface, Camera camera,
+            PaintDelegate paintDelegate, int width, int height) {
+        int tauSteps = kinematicSurface.getTauSteps();
+        int tSteps = kinematicSurface.gettSteps();
+        double t0 = kinematicSurface.getT0(), t1 = kinematicSurface.getT1();
+        double tau0 = kinematicSurface.getTau0(), tau1 = kinematicSurface.getTau1();
+        
+        List<TwoIntVector> currentVertices = new ArrayList<>(tauSteps + 1);
+        for (int i = 0; i <= tauSteps; i++) {
+            ThreeDoubleVector vertice = kinematicSurface.getP().apply(t0, tau0 + (tau1 - tau0) / tauSteps * i);
+            ThreeDoubleVector orientedVertice = OrientationMapper.getInstance()
+                    .orientVertice(vertice, kinematicSurface.getOrientation());
+            TwoIntVector convertedVertice = convertWorldCoordinatesToDiplayCoordinates(orientedVertice, camera, width, height);
+            currentVertices.add(convertedVertice);
+        }
+        
+        for (int i = 0; i <= tSteps; i++) {
+            for (int j = 0; j <= tauSteps; j++) {
+                TwoIntVector currentVertice = currentVertices.get(j);
+                if (j < tauSteps && currentVertice != null && currentVertices.get(j + 1) != null) {
+                    paintDelegate.putLine(currentVertice, currentVertices.get(j + 1),
+                            kinematicSurface.getColor(), kinematicSurface.getEdgePaintWidth());
+                }
+                if (i < tSteps) {
+                    ThreeDoubleVector nextVertice = kinematicSurface.getP().apply(
+                            t0 + (t1 - t0) / tSteps * (i + 1), tau0 + (tau1 - tau0) / tauSteps * j);
+                    ThreeDoubleVector nextOrientedVertice = OrientationMapper.getInstance()
+                            .orientVertice(nextVertice, kinematicSurface.getOrientation());
+                    TwoIntVector nextConvertedVertice = convertWorldCoordinatesToDiplayCoordinates(
+                            nextOrientedVertice, camera, width, height);
+                    if (currentVertice != null && nextConvertedVertice != null) {
+                        paintDelegate.putLine(currentVertice, nextConvertedVertice,
+                                kinematicSurface.getColor(), kinematicSurface.getEdgePaintWidth());
+                    }
+                    currentVertices.set(j, nextConvertedVertice);
+                }
+                if (currentVertice != null) {
+                    paintDelegate.putCircle(currentVertice, kinematicSurface.getVerticePaintRadius(),
+                            kinematicSurface.getColor());
+                }
+            }
+        }
+    }
+    
+    private TwoIntVector convertWorldCoordinatesToDiplayCoordinates(ThreeDoubleVector worldCoordinate,
+            Camera camera, int width, int height) {
+        return convertWorldCoordinatesToDiplayCoordinates(Arrays.asList(worldCoordinate), camera, width, height).iterator().next();
     }
     
     private List<TwoIntVector> convertWorldCoordinatesToDiplayCoordinates(List<ThreeDoubleVector> worldCoordinates,

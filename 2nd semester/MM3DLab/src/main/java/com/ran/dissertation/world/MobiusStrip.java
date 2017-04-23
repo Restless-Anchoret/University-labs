@@ -16,8 +16,8 @@ public class MobiusStrip extends KinematicSurface {
         strip.setP(
                 (t, tau) -> new ThreeDoubleVector(
                         (strip.getR() + strip.getH() * tau * Math.cos(strip.getN() * t / 2.0)) * Math.cos(t),
-                        strip.getH() * tau * Math.sin(strip.getN() * t / 2.0),
-                        (strip.getR() - strip.getH() * tau * Math.cos(strip.getN() * t / 2.0)) * Math.sin(t)
+                        (strip.getR() - strip.getH() * tau * Math.cos(strip.getN() * t / 2.0)) * Math.sin(t),
+                        strip.getH() * tau * Math.sin(strip.getN() * t / 2.0)
                 )
         );
         return strip;

@@ -10,8 +10,8 @@ import java.util.function.BiFunction;
 
 public class KinematicSurface extends DisplayableObject {
 
-    private final static int DEFAULT_T_STEPS = 100;
-    private final static int DEFAULT_TAU_STEPS = 10;
+    private final static int DEFAULT_T_STEPS = 60;
+    private final static int DEFAULT_TAU_STEPS = 8;
     
     private BiFunction<Double, Double, ThreeDoubleVector> p;
     private double t0, t1, tau0, tau1;
