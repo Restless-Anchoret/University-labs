@@ -20,8 +20,12 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="worldSwitchingPanel" max="32767" attributes="0"/>
-                  <Component id="animationControlPanel" alignment="0" pref="175" max="32767" attributes="0"/>
+                  <Component id="animationControlPanel" alignment="0" max="32767" attributes="0"/>
                   <Component id="operationsPanel" alignment="0" pref="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="mobiusStripPanel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -36,7 +40,9 @@
               <Component id="animationControlPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="operationsPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="225" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="mobiusStripPanel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -47,6 +53,8 @@
     <Component class="com.ran.dissertation.ui.WorldSwitchingPanel" name="worldSwitchingPanel">
     </Component>
     <Component class="com.ran.dissertation.ui.OperationsPanel" name="operationsPanel">
+    </Component>
+    <Component class="com.ran.dissertation.ui.MobiusStripPanel" name="mobiusStripPanel">
     </Component>
   </SubComponents>
 </Form>

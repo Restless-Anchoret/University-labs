@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+        <TitledBorder title="Mobius Strip"/>
+      </Border>
+    </Property>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelTau0" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelT0" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="textFieldT0" max="32767" attributes="0"/>
+                                  <Component id="textFieldTau0" pref="59" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="labelTSteps" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="textFieldTSteps" pref="41" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelH" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelR" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelN" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="textFieldR" max="32767" attributes="0"/>
+                                  <Component id="textFieldH" max="32767" attributes="0"/>
+                                  <Component id="textFieldN" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelTau1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelT1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="textFieldT1" pref="69" max="32767" attributes="0"/>
+                                  <Component id="textFieldTau1" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="labelTauSteps" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="textFieldTauSteps" pref="43" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Component id="buttonApply" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelT0" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldT0" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelT1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldT1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelTau0" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldTau0" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelTau1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldTau1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelTSteps" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldTSteps" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelTauSteps" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldTauSteps" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelR" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldR" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelH" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldH" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelN" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldN" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="buttonApply" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="labelT0">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="t0:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldT0">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0.0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelT1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="t1:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldT1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="6.28"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelTau0">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="tau0:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldTau0">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="-1.0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelTau1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="tau1:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldTau1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1.0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelTSteps">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="tSteps:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldTSteps">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="60"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelTauSteps">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="tauSteps:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldTauSteps">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="8"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelR">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="r:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldR">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="6.0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelH">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="h:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldH">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="2.0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelN">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="n:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textFieldN">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonApply">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Apply"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

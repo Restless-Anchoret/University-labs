@@ -15,6 +15,7 @@ public class DialogPanelContent extends JPanel {
         animationControlPanel = new com.ran.dissertation.ui.AnimationControlPanel();
         worldSwitchingPanel = new com.ran.dissertation.ui.WorldSwitchingPanel();
         operationsPanel = new com.ran.dissertation.ui.OperationsPanel();
+        mobiusStripPanel = new com.ran.dissertation.ui.MobiusStripPanel();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -24,8 +25,11 @@ public class DialogPanelContent extends JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(worldSwitchingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(animationControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                    .addComponent(operationsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(animationControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(operationsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(mobiusStripPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -37,12 +41,15 @@ public class DialogPanelContent extends JPanel {
                 .addComponent(animationControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(operationsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mobiusStripPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.ran.dissertation.ui.AnimationControlPanel animationControlPanel;
+    private com.ran.dissertation.ui.MobiusStripPanel mobiusStripPanel;
     private com.ran.dissertation.ui.OperationsPanel operationsPanel;
     private com.ran.dissertation.ui.WorldSwitchingPanel worldSwitchingPanel;
     // End of variables declaration//GEN-END:variables
@@ -57,6 +64,10 @@ public class DialogPanelContent extends JPanel {
 
     public OperationsPanel getOperationsPanel() {
         return operationsPanel;
+    }
+
+    public MobiusStripPanel getMobiusStripPanel() {
+        return mobiusStripPanel;
     }
     
 }

@@ -1,10 +1,12 @@
 package com.ran.dissertation.controller;
 
+import com.ran.dissertation.factories.DefaultWorld;
 import com.ran.dissertation.factories.WorldFactory;
 import com.ran.dissertation.ui.DialogPanelContent;
 import com.ran.dissertation.ui.MainFrame;
 import com.ran.dissertation.ui.SelectItem;
 import com.ran.dissertation.ui.WorldSwitchingPanelListener;
+import com.ran.dissertation.world.MobiusStrip;
 import com.ran.dissertation.world.World;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -40,6 +42,9 @@ public class MainController {
         worldSwitchingPanelListener.chosenWorldChanged(worlds.get(0), null);
         dialogPanelContent.getOperationsPanel().getSaveScreenshotButton()
                 .addActionListener(new ScreenshotSaverListener(mainFrame));
+        MobiusStrip mobiusStrip = ((DefaultWorld)worlds.iterator().next()).getMobiusStrip();
+        dialogPanelContent.getMobiusStripPanel().addMobiusStripPanelListener(
+                new DefaultMobiusStripPanelListener(mainFrame.getImagePanel(), mobiusStrip));
         mainFrame.getDialogPanel().setComponent(dialogPanelContent);
         mainFrame.setVisible(true);
     }
