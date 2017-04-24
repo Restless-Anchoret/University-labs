@@ -19,10 +19,8 @@ public class FigureFactory {
         return INSTANCE;
     }
     
-    private FigureFactory() { }
-    
     public Figure makeFigureWithOneVertice(ThreeDoubleVector vertice) {
-        return new Figure(Arrays.asList(vertice), Collections.EMPTY_LIST);
+        return new Figure(Arrays.asList(vertice), Collections.emptyList());
     }
     
     public Figure makeGrid(int xCellsQuantity, int yCellsQuantity, int zCellsQuantity,
@@ -51,13 +49,13 @@ public class FigureFactory {
                     vertices.add(new ThreeDoubleVector(x, y, z));
                     indexes[i][j][k] = currentIndex;
                     if (i > 0) {
-                        figureEdges.add(new Pair(indexes[i - 1][j][k], currentIndex));
+                        figureEdges.add(new Pair<>(indexes[i - 1][j][k], currentIndex));
                     }
                     if (j > 0) {
-                        figureEdges.add(new Pair(indexes[i][j - 1][k], currentIndex));
+                        figureEdges.add(new Pair<>(indexes[i][j - 1][k], currentIndex));
                     }
                     if (k > 0) {
-                        figureEdges.add(new Pair(indexes[i][j][k - 1], currentIndex));
+                        figureEdges.add(new Pair<>(indexes[i][j][k - 1], currentIndex));
                     }
                     currentIndex++;
                 }
@@ -89,7 +87,7 @@ public class FigureFactory {
                     .add(secondAxis.multiply(Math.cos(angle)))
                     .add(center);
             vertices.add(vertice);
-            figureEdges.add(new Pair(i, (i + 1) % segments));
+            figureEdges.add(new Pair<>(i, (i + 1) % segments));
         }
         return new Figure(vertices, figureEdges);
     }
@@ -141,7 +139,7 @@ public class FigureFactory {
         for (Pair<Double, Double> pointWithValue: pointsWithValues) {
             vertices.add(coordinatesConverter.convert(pointWithValue.getLeft(), pointWithValue.getRight()));
         }
-        List<Pair<Integer, Integer>> figureEdges = Collections.EMPTY_LIST;
+        List<Pair<Integer, Integer>> figureEdges = Collections.emptyList();
         return new Figure(vertices, figureEdges);
     }
     
@@ -158,10 +156,10 @@ public class FigureFactory {
         return new Figure(vertices, makeEdgesSimpleList(segments));
     }
     
-    private List<Pair<Integer, Integer>> makeEdgesSimpleList(int segments) {
+    protected List<Pair<Integer, Integer>> makeEdgesSimpleList(int segments) {
         List<Pair<Integer, Integer>> figureEdges = new ArrayList<>(segments);
         for (int i = 0; i < segments; i++) {
-            figureEdges.add(new Pair(i, i + 1));
+            figureEdges.add(new Pair<>(i, i + 1));
         }
         return figureEdges;
     }
