@@ -45,7 +45,7 @@ public class NewtonMethodConcreteTask {
     }
 
     private DoubleFunction<Double> fixApproximation(DoubleFunction<Double> approximation) {
-        return t -> approximation.apply(2.0 * t - 1.0) + (t - 1);
+        return t -> approximation.apply(2.0 * t - 1.0) + 2.0 + t * (Math.sqrt(3.0) - 2.0);
     }
 
 }
