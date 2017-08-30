@@ -6,19 +6,66 @@
 
     <groupId>com.ran</groupId>
     <artifactId>jexepackexample</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.2</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <version>1.7.19</version>
+                <executions>
+                    <execution>
+                        <id>l4j-clui</id>
+                        <phase>package</phase>
+                        <goals><goal>launch4j</goal></goals>
+                        <configuration>
+                            <headerType>console</headerType>
+                            <outfile>target/jexepackexample.exe</outfile>
+                            <jar>target/jexepackexample-1.0.jar</jar>
+                            <errTitle>jexepackexample</errTitle>
+                            <icon>src/main/resources/blog.ico</icon>
+                            <classPath>
+                                <mainClass>com.ran.jexepackexample.main.Main</mainClass>
+                                <addDependencies>true</addDependencies>
+                                <preCp>anything</preCp>
+                            </classPath>
+                            <jre>
+                                <minVersion>1.8.0</minVersion>
+                                <opts>
+                                    <opt>-Djava.endorsed.dirs=./endorsed</opt>
+                                </opts>
+                            </jre>
+                            <versionInfo>
+                                <fileVersion>1.0.0.0</fileVersion>
+                                <txtFileVersion>File Version 1.0.0.0</txtFileVersion>
+                                <fileDescription>File Description</fileDescription>
+                                <copyright>My Copyright</copyright>
+                                <productVersion>1.0.0.0</productVersion>
+                                <txtProductVersion>Product Version 1.0.0.0</txtProductVersion>
+                                <productName>JexePackExample</productName>
+                                <internalName>jexepackexample</internalName>
+                                <originalFilename>jexepackexample.exe</originalFilename>
+                            </versionInfo>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
 
 </project>
