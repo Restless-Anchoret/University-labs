@@ -1,0 +1,34 @@
+DSR
+4
+
+Manager
+Andrey
+Pechkurov
+SENIOR
+Vert.x Spring MongoDB
+Project1 Project2 Project3
+15
+
+Developer
+Ilya
+Kuznetsov
+MIDDLE
+Spring AngularJS Docker
+Back-end
+Project1
+
+Manager
+Konstantin
+Nekrasov
+SENIOR
+Spring Docker PostgreSQL
+Project2 Project4 Project5
+10
+
+Developer
+Alexander
+Taraskin
+JUNIOR
+Spring AngularJS React
+Web
+Project1

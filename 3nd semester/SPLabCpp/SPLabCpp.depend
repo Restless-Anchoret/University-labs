@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1507656928 source:d:\dropbox\coding\repositories\university-labs\3nd semester\splabcpp\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<algorithm>
+
