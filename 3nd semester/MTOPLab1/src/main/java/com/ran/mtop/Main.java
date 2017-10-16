@@ -16,6 +16,7 @@ public class Main {
         OpenGLRunner runner = new OpenGLRunner(
                 Collections.singletonList(new MtopWorldFactory(resultList)),
                 CameraControlMode.TWO_DIMENSION);
+        runner.init();
         runner.run();
     }
 
