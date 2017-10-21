@@ -14,6 +14,10 @@ public class Main {
         ITCompany itCompany = readInfoFromFile();
         itCompany.sort();
         itCompany.print();
+
+        System.out.println("Without not odd:");
+        itCompany.removeNotOdd();
+        itCompany.print();
     }
 
     private static ITCompany readInfoFromFile() throws IOException {

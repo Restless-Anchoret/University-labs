@@ -1,5 +1,6 @@
 package com.ran.splabjava;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,6 +30,22 @@ public class ITCompany {
             programmer.print();
             System.out.println();
         });
+    }
+
+    public void removeNotOdd() {
+        List<Programmer> result = new ArrayList<>();
+        programmers.forEach(programmer -> {
+            if (programmer instanceof Manager) {
+                result.add(programmer);
+            } else {
+                String project = ((Developer)programmer).getCurrentProject();
+                int number = Integer.parseInt(project.substring(project.length() - 1));
+                if (number % 2 == 1) {
+                    result.add(programmer);
+                }
+            }
+        });
+        this.programmers = result;
     }
 
 }

@@ -31,4 +31,4 @@ Taraskin
 JUNIOR
 Spring AngularJS React
 Web
-Project1
+Project2
