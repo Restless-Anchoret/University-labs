@@ -1,8 +1,11 @@
+#include "stdafx.h"
+#include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -12,9 +15,10 @@ enum Position {
     SENIOR
 };
 
-
+// Базовый класс
 class Programmer {
 
+// Приватные свойства базового класса
 private:
     string name;
     string surname;
@@ -29,6 +33,7 @@ public:
         this->skills = skills;
     }
 
+	// Get- и Set-методы
     string getName() {
         return name;
     }
@@ -41,6 +46,7 @@ public:
         return position;
     }
 
+	// Метод в базовом классе, вызываемый классами-наследниками
     string getPositionAsString() {
         if (position == JUNIOR) {
             return "JUNIOR";
@@ -55,6 +61,7 @@ public:
         return skills;
     }
 
+	// Метод в базовом классе, вызываемый классами-наследниками
     string getSkillsAsString() {
         string result = skills[0] + " ";
         for (int i = 1; i < skills.size(); i++) {
@@ -63,10 +70,12 @@ public:
         return result;
     }
 
+	// Абстрактный метод базового класса
     virtual void print() = 0;
 
 };
 
+// Метод, определяющий правило для сортировки
 bool compareProgrammers(Programmer* first, Programmer* second) {
     if (first->getPosition() != second->getPosition()) {
         return first->getPosition() < second->getPosition();
@@ -78,8 +87,10 @@ bool compareProgrammers(Programmer* first, Programmer* second) {
 }
 
 
+// Класс-наследник
 class Developer : public Programmer {
 
+// Приватные свойства класса наследника
 private:
     string knowledgeArea;
     string currentProject;
@@ -91,6 +102,7 @@ public:
         this-> currentProject = currentProject;
     }
 
+	// Get- и Set-методы
     string getKnowledgeArea() {
         return knowledgeArea;
     }
@@ -99,6 +111,7 @@ public:
         return currentProject;
     }
 
+	// Переопределенный метод базового класса
     void print() {
         cout << "Developer: " << getSurname() << " " << getName() << endl;
         cout << "Position: " << getPositionAsString() << " " << endl;
@@ -110,8 +123,10 @@ public:
 };
 
 
+// Класс-наследник
 class Manager : public Programmer {
 
+// Приватные свойства класса наследника
 private:
     vector<string> projects;
     int subordinatesQuantity;
@@ -123,6 +138,7 @@ public:
         this->subordinatesQuantity = subordinatesQuantity;
     }
 
+	// Get- и Set-методы
     vector<string> getProjects() {
         return projects;
     }
@@ -139,6 +155,7 @@ public:
         return result;
     }
 
+	// Переопределенный метод базового класса
     void print() {
         cout << "Manager: " << getSurname() << " " << getName() << endl;
         cout << "Position: " << getPositionAsString() << " " << endl;
@@ -150,10 +167,12 @@ public:
 };
 
 
+// Класс-контейнер
 class ITCompany {
 
 private:
     string name;
+	// Список экземпляров базового класса
     vector<Programmer*> programmers;
 
 public:
@@ -172,6 +191,7 @@ public:
         std::sort(programmers.begin(), programmers.end(), compareProgrammers);
     }
 
+	// Вывод в консоль содержимого контейнера
     void print() {
         cout << "IT Company: " << name << endl << endl;
         for (int i = 0; i < programmers.size(); i++) {
@@ -184,6 +204,25 @@ public:
             cout << endl;
         }
     }
+
+	// Удаление разработчиков с четными номерами проектов
+	void removeNotOdd() {
+		vector<Programmer*> result;
+		for (int i = 0; i < programmers.size(); i++) {
+			if (Developer* developer = dynamic_cast<Developer*>(programmers[i])) {
+				string project = developer->getCurrentProject();
+				char * arr = new char[1];
+				arr[0] = project[project.length() - 1];
+				int number = atoi(arr);
+				if (number % 2 == 1) {
+					result.push_back(programmers[i]);
+				}
+            } else if (Manager* manager = dynamic_cast<Manager*>(programmers[i])) {
+				result.push_back(programmers[i]);
+            }
+		}
+		programmers = result;
+	}
 
 };
 
@@ -226,6 +265,7 @@ vector<string> getWords(ifstream& in) {
     return result;
 }
 
+// Чтение изначального содержимого контейнера из файла
 ITCompany* readInfoFromFile() {
     ifstream in("input.txt");
     string name = getString(in);
@@ -252,12 +292,20 @@ ITCompany* readInfoFromFile() {
     return new ITCompany(name, programmers);
 }
 
+
 int main()
 {
     ITCompany* company = readInfoFromFile();
     company->sort();
     company->print();
+
+	cout << "Without not odd:" << endl;
+	company->removeNotOdd();
+	company->print();
+
     delete company;
 
+	cin.get();
     return 0;
+	
 }
