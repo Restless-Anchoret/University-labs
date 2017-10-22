@@ -20,6 +20,7 @@ public class Main {
         itCompany.print();
     }
 
+    // Чтение изначального содержимого контейнера из файла
     private static ITCompany readInfoFromFile() throws IOException {
         InputStream inputStream = Main.class.getResourceAsStream("input.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));

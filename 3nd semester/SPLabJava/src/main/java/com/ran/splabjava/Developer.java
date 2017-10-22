@@ -2,8 +2,10 @@ package com.ran.splabjava;
 
 import java.util.List;
 
+// Класс-наследник
 public class Developer extends Programmer {
 
+    // Приватные свойства класса наследника
     private String knowledgeArea;
     private String currentProject;
 
@@ -14,6 +16,7 @@ public class Developer extends Programmer {
         this.currentProject = currentProject;
     }
 
+    // Get- и Set-методы
     public String getKnowledgeArea() {
         return knowledgeArea;
     }
@@ -30,6 +33,7 @@ public class Developer extends Programmer {
         this.currentProject = currentProject;
     }
 
+    // Переопределенный метод базового класса
     @Override
     void print() {
         System.out.println("Developer: " + getSurname() + " " + getName());

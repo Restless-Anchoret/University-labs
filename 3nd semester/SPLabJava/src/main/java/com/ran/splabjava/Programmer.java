@@ -2,8 +2,10 @@ package com.ran.splabjava;
 
 import java.util.List;
 
+// Базовый класс
 abstract public class Programmer implements Comparable<Programmer> {
 
+    // Приватные свойства базового класса
     private String name;
     private String surname;
     private Position position;
@@ -16,6 +18,7 @@ abstract public class Programmer implements Comparable<Programmer> {
         this.skills = skills;
     }
 
+    // Get- и Set-методы
     public String getName() {
         return name;
     }
@@ -48,14 +51,17 @@ abstract public class Programmer implements Comparable<Programmer> {
         this.skills = skills;
     }
 
+    // Абстрактный метод базового класса
     abstract void print();
 
+    // Метод в базовом классе, вызываемый классами-наследниками
     public String getSkillsAsString() {
         return skills.stream()
                 .reduce((first, second) -> first + ", " + second)
                 .get();
     }
 
+    // Метод, определяющий правило для сортировки
     public int compareTo(Programmer other) {
         if (this.position != other.position) {
             return Integer.compare(this.position.ordinal(), other.position.ordinal());

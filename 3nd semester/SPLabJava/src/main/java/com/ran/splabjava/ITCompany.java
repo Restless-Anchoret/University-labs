@@ -1,12 +1,13 @@
 package com.ran.splabjava;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// Класс-контейнер
 public class ITCompany {
 
     private String name;
+    // Список экземпляров базового класса
     private List<Programmer> programmers;
 
     public ITCompany(String name, List<Programmer> programmers) {
@@ -18,6 +19,7 @@ public class ITCompany {
         Collections.sort(programmers);
     }
 
+    // Вывод в консоль содержимого контейнера
     public void print() {
         System.out.println("IT company: " + name);
         System.out.println();
@@ -32,20 +34,17 @@ public class ITCompany {
         });
     }
 
+    // Удаление разработчиков с четными номерами проектов
     public void removeNotOdd() {
-        List<Programmer> result = new ArrayList<>();
-        programmers.forEach(programmer -> {
+        programmers.removeIf(programmer -> {
             if (programmer instanceof Manager) {
-                result.add(programmer);
+                return false;
             } else {
                 String project = ((Developer)programmer).getCurrentProject();
                 int number = Integer.parseInt(project.substring(project.length() - 1));
-                if (number % 2 == 1) {
-                    result.add(programmer);
-                }
+                return number % 2 == 0;
             }
         });
-        this.programmers = result;
     }
 
 }

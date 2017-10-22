@@ -2,8 +2,10 @@ package com.ran.splabjava;
 
 import java.util.List;
 
+// Класс-наследник
 public class Manager extends Programmer {
 
+    // Приватные свойства класса наследника
     private List<String> projects;
     private int subordinatesQuantity;
 
@@ -14,6 +16,7 @@ public class Manager extends Programmer {
         this.subordinatesQuantity = subordinatesQuantity;
     }
 
+    // Get- и Set-методы
     public List<String> getProjects() {
         return projects;
     }
@@ -36,6 +39,7 @@ public class Manager extends Programmer {
                 .get();
     }
 
+    // Переопределенный метод базового класса
     @Override
     void print() {
         System.out.println("Manager: " + getSurname() + " " + getName());
