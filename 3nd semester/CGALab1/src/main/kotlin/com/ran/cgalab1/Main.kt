@@ -13,6 +13,8 @@ fun main(args: Array<String>) {
     runner.renderingEngine.renderingActions.add(PixelRenderingAction(model))
 
     runner.keyboardEventHandlers.clear()
+    runner.keyboardEventHandlers.add(PixelKeyboardHandler(model))
+
     runner.mouseEventHandlers.clear()
     runner.mouseEventHandlers.add(PixelMouseHandler(model))
 

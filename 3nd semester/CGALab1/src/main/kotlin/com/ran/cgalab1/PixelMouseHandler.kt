@@ -22,19 +22,15 @@ class PixelMouseHandler(
             else -> NO_BUTTON_PRESSED
         }
 
+        val currentPixel = findCurrentPixel()
         if (previousState == NO_BUTTON_PRESSED && currentState == LEFT_BUTTON_PRESSED) {
-            val currentPixel = findCurrentPixel()
             model.pixelObjects.add(LinePixelObject(currentPixel, currentPixel))
-        } else if (previousState == LEFT_BUTTON_PRESSED && currentState == LEFT_BUTTON_PRESSED) {
-            model.pixelObjects[model.pixelObjects.size - 1].secondPixel = findCurrentPixel()
         } else if (previousState == NO_BUTTON_PRESSED && currentState == RIGHT_BUTTON_PRESSED) {
-            val currentPixel = findCurrentPixel()
             model.pixelObjects.add(CirclePixelObject(currentPixel, currentPixel))
-        } else if (previousState == RIGHT_BUTTON_PRESSED && currentState == RIGHT_BUTTON_PRESSED) {
-            val currentPixel = findCurrentPixel()
-            model.pixelObjects[model.pixelObjects.size - 1].secondPixel = currentPixel
-        } else if (previousState == NO_BUTTON_PRESSED && currentState == MIDDLE_BUTTON_PRESSED && !model.pixelObjects.isEmpty()) {
-            model.pixelObjects.removeAt(model.pixelObjects.size - 1)
+        } else if (previousState == NO_BUTTON_PRESSED && currentState == MIDDLE_BUTTON_PRESSED) {
+            model.pixelObjects.add(DdaLinePixelObject(currentPixel, currentPixel))
+        } else if (previousState == currentState && currentState != NO_BUTTON_PRESSED) {
+            model.pixelObjects[model.pixelObjects.size - 1].secondPixel = findCurrentPixel()
         }
         previousState = currentState
     }
