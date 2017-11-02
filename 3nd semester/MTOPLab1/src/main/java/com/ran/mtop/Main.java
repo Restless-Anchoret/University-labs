@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         RungeKuttaSolver rungeKuttaSolver = new RungeKuttaSolver(
-                (t, x) -> x + Math.exp(t), 0, 0, 0.1, 40);
+                (t, x) -> t * Math.exp(-t * t) - 2 * x * t, 0, 0, 0.01, 400);
         List<TwoDoubleVector> resultList = rungeKuttaSolver.solve();
         OpenGLRunner runner = new OpenGLRunner(
                 Collections.singletonList(new MtopWorldFactory(resultList)),
