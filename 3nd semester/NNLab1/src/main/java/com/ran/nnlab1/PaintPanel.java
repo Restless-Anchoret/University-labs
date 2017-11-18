@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 
 public class PaintPanel extends JPanel {
 
+    private static final int SIDE_LENGTH = 400;
+    
     private boolean[][] matrix = null;
     private BufferedImage lastFrameImage = null;
     private Pair<Integer, Integer> lastPoint = null;
@@ -67,6 +69,10 @@ public class PaintPanel extends JPanel {
     }
     
     private void savePixel(MouseEvent e) {
+        if (e.getX() < 0 || e.getX() >= SIDE_LENGTH ||
+                e.getY() < 0 || e.getY() >= SIDE_LENGTH) {
+            return;
+        }
         if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) != 0) {
             matrix[e.getY()][e.getX()] = true;
             if (lastPoint != null) {
@@ -92,21 +98,19 @@ public class PaintPanel extends JPanel {
     
     @Override
     protected void paintComponent(Graphics graphics) {
-        int w = getWidth();
-        int h = getHeight();
         if (matrix == null) {
-            matrix = new boolean[h][w];
+            matrix = new boolean[SIDE_LENGTH][SIDE_LENGTH];
         }
         
-        BufferedImage image = (BufferedImage) createImage(w, h);
+        BufferedImage image = (BufferedImage) createImage(SIDE_LENGTH, SIDE_LENGTH);
         Graphics2D graphics2D = (Graphics2D) image.getGraphics();
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics2D.setColor(Color.WHITE);
-        graphics2D.fillRect(0, 0, w - 1, h - 1);
+        graphics2D.fillRect(0, 0, SIDE_LENGTH - 1, SIDE_LENGTH - 1);
         
         graphics2D.setColor(Color.BLACK);
-        for (int y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
+        for (int y = 0; y < SIDE_LENGTH; y++) {
+            for (int x = 0; x < SIDE_LENGTH; x++) {
                 if (matrix[y][x]) {
                     graphics2D.fillRect(x - 2, y - 2, 5, 5);
                 }

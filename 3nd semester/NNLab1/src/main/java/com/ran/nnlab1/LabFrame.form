@@ -27,14 +27,31 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="paintPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="recognizeButton" pref="154" max="32767" attributes="0"/>
-                  <Component id="learnButton" max="32767" attributes="0"/>
-                  <Component id="clearButton" max="32767" attributes="0"/>
-                  <Component id="lastResultLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="resultTextField" alignment="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="answerZeroLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="answerZeroTextField" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="recognizeButton" pref="154" max="32767" attributes="0"/>
+                              <Component id="learnButton" max="32767" attributes="0"/>
+                              <Component id="clearButton" max="32767" attributes="0"/>
+                              <Component id="lastResultLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="resultTextField" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="answerOneLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="answerOneTextField" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -43,18 +60,28 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Component id="paintPanel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="recognizeButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="learnButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="clearButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="answerZeroLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="answerZeroTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="answerOneLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="answerOneTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lastResultLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="resultTextField" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="paintPanel" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -109,6 +136,26 @@
     <Component class="javax.swing.JLabel" name="lastResultLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x41f;&#x43e;&#x441;&#x43b;&#x435;&#x434;&#x43d;&#x438;&#x439; &#x440;&#x435;&#x437;&#x443;&#x43b;&#x44c;&#x442;&#x430;&#x442;:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="answerZeroLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x41e;&#x442;&#x432;&#x435;&#x442; 0:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="answerOneLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x41e;&#x442;&#x432;&#x435;&#x442; 1:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="answerZeroTextField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="R"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="answerOneTextField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="A"/>
       </Properties>
     </Component>
   </SubComponents>
