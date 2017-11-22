@@ -18,7 +18,9 @@ public class Main {
     public static void main(String[] args) {
         JFunctional jFunctional = new JFunctional();
         GradientDescent gradientDescent = new GradientDescent();
-        GradientDescent.Result result = gradientDescent.findMaximum(jFunctional, 1.0, 1.0, 1.0, 1e-6);
+//        GradientDescent.Result result = gradientDescent.findMaximum(jFunctional, 900.0, 2.0, 100, 1, 1e-6, 200);
+        GradientDescent.Result result = gradientDescent.findMaximum(jFunctional, 800.0, 5.0, 10000, 100, 1e-6, 200);
+        System.out.println();
         System.out.println("Result: a1 = " + result.getA1() + "; a2 = " + result.getA2() +
                 "; functional value: " + result.getFunctionValue());
         java.util.function.DoubleFunction<Double> sourceX7 = JFunctional.createX7(result.getA1(), result.getA2());

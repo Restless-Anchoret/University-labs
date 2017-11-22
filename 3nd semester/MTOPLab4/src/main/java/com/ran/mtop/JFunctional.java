@@ -72,11 +72,26 @@ public class JFunctional implements BiFunction<Double, Double, Double> {
     public static DoubleFunction<Double> createX7(double a1, double a2) {
         return l -> {
             if (l <= 90) {
-                return LOW + Math.pow(l / 90.0, a1) * (MIDDLE - LOW);
+                return LOW + (l / 90.0) * (a1 - LOW);
             } else {
-                return MIDDLE + Math.pow((l - 90.0) / 90.0, a2) * (HIGH - MIDDLE);
+                return a1 + Math.pow((l - 90.0) / 90.0, a2) * (HIGH - a1);
             }
         };
+//        return l -> {
+//            if (l <= 90) {
+//                return LOW + Math.pow(l / 90.0, a1) * (MIDDLE - LOW);
+//            } else {
+//                return MIDDLE + Math.pow((l - 90.0) / 90.0, a2) * (HIGH - MIDDLE);
+//            }
+//        };
+    }
+
+    public static boolean isA1Correct(double a1) {
+        return LOW <= a1 && a1 <= HIGH;
+    }
+
+    public static boolean isA2Correct(double a2) {
+        return a2 > 0.0;
     }
 
 }
