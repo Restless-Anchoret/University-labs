@@ -152,8 +152,8 @@ def integralNum(numFun):
     return integralCurve(curve)
 
 def integralCurve(curve):
-    result = integrate.quad(curve, A, B)
-    if result[1] > 1.0e-6:
+    result = integrate.quad(curve, A, B, limit=500)
+    if result[1] > 1.0e-3:
         print("Warning! Not enough accuracy for integral calculation:", result[1])
     return result[0]
 
