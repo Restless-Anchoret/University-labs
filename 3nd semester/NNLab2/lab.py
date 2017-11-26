@@ -49,7 +49,7 @@ def main():
     result_list, data_list = get_train_data()
     print("Data retrieved")
 
-    threshold = 700
+    threshold = 750
     train_list = data_list[:threshold]
     train_result_list = result_list[:threshold]
 
@@ -61,7 +61,7 @@ def main():
         solver='sgd',
         max_iter=5000,
         alpha=0.2,
-        hidden_layer_sizes=(100, 20),
+        hidden_layer_sizes=(120, 50),
         tol=1e-6,
         activation='relu',
         learning_rate_init=0.1,
