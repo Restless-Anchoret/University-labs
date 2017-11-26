@@ -8,8 +8,8 @@ import java.awt.image.Raster;
 public class PictureConverter {
 
     private static final int PICTURE_SIDE = 300;
-    private static final int PIXEL_BLOCK_SIDE = 10;
-    private static final int PIXEL_PICTURE_SIDE = PICTURE_SIDE / PIXEL_BLOCK_SIDE;
+    private static final int PIXEL_PICTURE_SIDE = 60;
+    public static final int PIXEL_BLOCK_SIDE = PICTURE_SIDE / PIXEL_PICTURE_SIDE;
     public static final int ARRAY_SIZE = PIXEL_PICTURE_SIDE * PIXEL_PICTURE_SIDE;
     
     public double[] convertPictureToArray(BufferedImage image) {
@@ -35,10 +35,10 @@ public class PictureConverter {
     private double[][] convertPictureToMatrix(BufferedImage image) {
         Raster raster = image.getData();
         double[][] matrix = new double[PICTURE_SIDE][PICTURE_SIDE];
-        double[] array = new double[3];
+        double[] array = new double[4];
         for (int i = 0; i < PICTURE_SIDE; i++) {
             for (int j = 0; j < PICTURE_SIDE; j++) {
-                array = raster.getPixel(i, j, array);
+                array = raster.getPixel(j, i, array);
                 matrix[i][j] = array[0];
             }
         }
@@ -60,7 +60,7 @@ public class PictureConverter {
                     }
                 }
                 double average = sum / (PIXEL_BLOCK_SIDE * PIXEL_BLOCK_SIDE);
-                compressedMatrix[i][j] = (average < 128 ? -1.0 : 1.0);
+                compressedMatrix[i][j] = (average < 220 ? -1.0 : 1.0);
             }
         }
         return compressedMatrix;

@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 public class PaintPanel extends JPanel {
 
     private static final int SIDE_LENGTH = 300;
+    private static final int PIXEL_BLOCK_SIDE = PictureConverter.PIXEL_BLOCK_SIDE;
+    private static final int PIXEL_AROUND = 1;
     
     private BufferedImage image = null;
     private Pair<Integer, Integer> lastPoint = null;
@@ -88,13 +90,21 @@ public class PaintPanel extends JPanel {
         Graphics2D graphics = image.createGraphics();
         graphics.setColor(color);
         
+        int x = e.getX() / PIXEL_BLOCK_SIDE;
+        int y = e.getY() / PIXEL_BLOCK_SIDE;
+        
         if (lastPoint != null) {
-            List<Pair<Integer, Integer>> list = brezenhem(e.getX(), e.getY(), lastPoint.getFirst(), lastPoint.getSecond());
+            List<Pair<Integer, Integer>> list = brezenhem(x, y,
+                    lastPoint.getFirst(), lastPoint.getSecond());
             list.stream().forEach((point) -> {
-                graphics.fillRect(point.getFirst() - 2, point.getSecond() - 2, 5, 5);
+                graphics.fillRect(
+                        (point.getFirst() - PIXEL_AROUND) * PIXEL_BLOCK_SIDE,
+                        (point.getSecond() - PIXEL_AROUND) * PIXEL_BLOCK_SIDE,
+                        PIXEL_BLOCK_SIDE * (PIXEL_AROUND * 2 + 1),
+                        PIXEL_BLOCK_SIDE * (PIXEL_AROUND * 2 + 1));
             });
         }
-        lastPoint = new Pair<>(e.getX(), e.getY());
+        lastPoint = new Pair<>(x, y);
         repaint();
     }
     

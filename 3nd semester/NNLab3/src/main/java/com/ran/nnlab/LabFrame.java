@@ -1,25 +1,35 @@
 package com.ran.nnlab;
 
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 public class LabFrame extends JFrame {
 
     private static final int PICTURES_QUANTITY = 4;
     private static final String PICTURE_FILE_NAME = "picture%s.png";
+    private static final String PROCESSING = "Processing...";
+    private static final int TIMER_PERIOD = 1000;
     
     private List<BufferedImage> images = new ArrayList<>();
     private List<String> imageNames = new ArrayList<>();
     private int loadedImageIndex = 1;
+    private PictureConverter pictureConverter = new PictureConverter();
+    private HopfieldNetwork hopfieldNetwork = null;
+    private Timer timer = null;
     
     public LabFrame() {
         initComponents();
         initPictures();
+        initHopfieldNetwork();
     }
     
     private void initPictures() {
@@ -27,13 +37,25 @@ public class LabFrame extends JFrame {
             String fileName = String.format(PICTURE_FILE_NAME, Integer.toString(i));
             try {
                 BufferedImage image = ImageIO.read(LabFrame.class.getResourceAsStream(fileName));
-                images.add(image);
+                double[] imageArray = pictureConverter.convertPictureToArray(image);
+                BufferedImage compressedImage = pictureConverter.convertArrayToPicture(imageArray);
+                images.add(compressedImage);
                 imageNames.add(fileName);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
         setImageByIndex(1);
+    }
+    
+    private void initHopfieldNetwork() {
+        hopfieldNetwork = new HopfieldNetwork(PictureConverter.ARRAY_SIZE);
+        double[][] doubleImages = new double[PICTURES_QUANTITY][PictureConverter.ARRAY_SIZE];
+        for (int i = 0; i < PICTURES_QUANTITY; i++) {
+            BufferedImage image = images.get(i);
+            doubleImages[i] = pictureConverter.convertPictureToArray(image);
+        }
+        hopfieldNetwork.init(doubleImages);
     }
 
     @SuppressWarnings("unchecked")
@@ -150,7 +172,50 @@ public class LabFrame extends JFrame {
     }//GEN-LAST:event_buttonNextActionPerformed
 
     private void buttonRecognizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRecognizeActionPerformed
-        // TODO add your handling code here:
+        labelProcessing.setText(PROCESSING);
+        textFieldRecognized.setText("");
+        
+        BufferedImage startImage = paintPanel.getImage();
+        double[] imageArray = pictureConverter.convertPictureToArray(startImage);
+        BufferedImage compressedStartImage = pictureConverter.convertArrayToPicture(imageArray);
+        paintPanel.setImage(compressedStartImage);
+        paintPanel.repaint();
+       
+        if (checkIfImageWasFound(imageArray)) {
+            System.out.println("Initial image is original");
+            return;
+        }
+        
+        timer = new Timer(TIMER_PERIOD, new TimerAction(imageArray));
+        timer.start();
+        System.out.println("Recognizing started");
+        
+
+////        paintPanel.repaint();
+//        repaint();
+//        int iterations = 0;
+//        
+//        while(true) {
+//            iterations++;
+//            sleep();
+//            
+//            imageArray = hopfieldNetwork.passImage(imageArray);
+//            BufferedImage compressedImage = pictureConverter.convertArrayToPicture(imageArray);
+//            paintPanel.setImage(compressedImage);
+////            paintPanel.repaint();
+//            repaint();
+//            int imageIndex = hopfieldNetwork.findOriginalImageIndex(imageArray);
+//            
+//            if (imageIndex != -1) {
+//                System.out.println("Iteration #" + iterations + ": found original image");
+//                labelProcessing.setText("");
+//                textFieldRecognized.setText(imageNames.get(imageIndex));
+//                break;
+//            }
+//            
+//            hopfieldNetwork.forget(imageArray);
+//            System.out.println("Iteration #" + iterations + ": forgot false image");
+//        }
     }//GEN-LAST:event_buttonRecognizeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -174,7 +239,48 @@ public class LabFrame extends JFrame {
         graphics.drawImage(originalImage, 0, 0, this);
         paintPanel.setImage(image);
         paintPanel.repaint();
-        textFieldInitPicture.setText(imageNames.get(0));
+        textFieldInitPicture.setText(imageNames.get(correctedIndex));
+    }
+    
+    private boolean checkIfImageWasFound(double[] currentImage) {
+        int imageIndex = hopfieldNetwork.findOriginalImageIndex(currentImage);
+        if (imageIndex != -1) {
+            labelProcessing.setText("");
+            textFieldRecognized.setText(imageNames.get(imageIndex));
+            return true;
+        }
+        return false;
+    }
+    
+    private class TimerAction implements ActionListener {
+        
+        private int iterations = 0;
+        private double[] imageArray;
+
+        public TimerAction(double[] imageArray) {
+            this.imageArray = imageArray;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            iterations++;
+            imageArray = hopfieldNetwork.passImage(imageArray);
+            BufferedImage compressedImage = pictureConverter.convertArrayToPicture(imageArray);
+            paintPanel.setImage(compressedImage);
+            paintPanel.repaint();
+            
+            if (checkIfImageWasFound(imageArray)) {
+                System.out.println("Iteration #" + iterations + ": found original image");
+                timer.stop();
+                return;
+            }
+            
+            do {
+                hopfieldNetwork.forget(imageArray);
+            } while (Arrays.equals(imageArray, hopfieldNetwork.passImage(imageArray)));
+            System.out.println("Iteration #" + iterations + ": forgot false image");
+        }
+        
     }
     
 }
