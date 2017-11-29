@@ -10,7 +10,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        RungeKuttaSolver rungeKuttaSolver = SolverCreator.getSolver(0.1, l -> 900.0);
+        RungeKuttaSolver rungeKuttaSolver = SolverCreator.getSolver(0.1, l -> 1000.0);
         List<List<TwoDoubleVector>> resultList = rungeKuttaSolver.solve();
         System.out.println("Functional value: " + JFunctional.evaluate(resultList));
         OpenGLRunner runner = new OpenGLRunner(

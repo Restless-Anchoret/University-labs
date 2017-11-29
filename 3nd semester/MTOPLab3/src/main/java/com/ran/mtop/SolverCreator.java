@@ -20,16 +20,17 @@ public class SolverCreator {
                 40000.0, 40000.0, 40000.0,
                 20000.0, 20000.0, 20000.0,
                 20000.0, 20000.0, 20000.0);
-        List<Double> u = Arrays.asList(15.19, 8.18, 13.198, 3.543, 4723.7, 423.7, 204.41, 1.466e-6, 0.013, 0.09, 5.428e-6, 0.024, 5.92e-6);
+        List<Double> u = Arrays.asList(15.19, 8.18, 13.198, 3.543, 4723.7, 423.7, 204.41, 0.000001466, 0.013, 0.09, 0.000005428, 0.024, 0.00000592);
         List<DoubleFunction<Double>> r = new ArrayList<>();
         for (int index = 0; index < 13; index++) {
-            int i = index;
-            r.add(l -> u.get(i) * Math.exp(23.0 - e.get(i) / x7.apply(l)));
+            double ui = u.get(index);
+            double ei = e.get(index);
+            r.add(l -> ui * Math.exp(23.0 - ei / x7.apply(l)));
         }
         double g = 1750.0;
         double gn = 3500.0;
-        double m0 = 18d;
-        List<Double> m = Arrays.asList(84d, 56d, 42d, 28d, 92d, 16d);
+        double m0 = 18.0;
+        List<Double> m = Arrays.asList(84.0, 56.0, 42.0, 28.0, 92.0, 16.0);
         Function<Double, Double> p = l -> 5.0 - l / 60.0;
         BiFunction<Double, List<Double>, Double> nu = (l, x) -> {
             double mxSum = StreamUtils.zip(m.stream(), x.stream(), (mi, xi) -> mi * xi)
@@ -42,7 +43,7 @@ public class SolverCreator {
                 (l, x) -> -(r.get(0).apply(l) + r.get(1).apply(l) +
                         r.get(2).apply(l) + r.get(3).apply(l)) * x.get(0) * nu.apply(l, x),
                 (l, x) -> (r.get(2).apply(l) * x.get(0) - (r.get(5).apply(l) + r.get(6).apply(l) +
-                        r.get(9).apply(l) + r.get(12).apply(l)) * x.get(0)) * nu.apply(l, x),
+                        r.get(9).apply(l) + r.get(12).apply(l)) * x.get(1)) * nu.apply(l, x),
                 (l, x) -> (r.get(1).apply(l) * x.get(0) + r.get(5).apply(l) * x.get(1) -
                         (r.get(4).apply(l) + r.get(8).apply(l) + r.get(11).apply(l)) * x.get(2)) * nu.apply(l, x),
                 (l, x) -> (r.get(0).apply(l) * x.get(0) + r.get(6).apply(l) * x.get(1) +
@@ -52,7 +53,9 @@ public class SolverCreator {
                 (l, x) -> (r.get(3).apply(l) * x.get(0) + r.get(12).apply(l) * x.get(1) +
                         r.get(11).apply(l) * x.get(2) + r.get(10).apply(l) * x.get(3)) * nu.apply(l, x)
         );
-        return new RungeKuttaSolver(f, 0.0, x0, h, 180 * (int)Math.round(1.0 / h), 6);
+        int steps = 180 * (int)Math.round(1.0 / h);
+        System.out.println("h = " + h + "; steps = " + steps);
+        return new RungeKuttaSolver(f, 0.0, x0, h, steps, 6);
     }
 
     public static DoubleFunction<Double> createX7(double a1, double a2) {
