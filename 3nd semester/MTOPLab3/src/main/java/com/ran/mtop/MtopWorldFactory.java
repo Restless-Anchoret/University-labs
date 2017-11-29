@@ -46,7 +46,7 @@ public class MtopWorldFactory extends BaseWorldFactory {
 
     private Figure createFigureByPoints(List<TwoDoubleVector> points) {
         List<ThreeDoubleVector> vertices = points.stream()
-                .map(point -> new TwoDoubleVector(point.getX() / 180.0, point.getY()))
+                .map(point -> new TwoDoubleVector(point.getX() / 90.0, point.getY()))
                 .map(CoordinatesConverter.CONVERTER_TO_XZ::convert)
                 .collect(Collectors.toList());
         return new Figure(vertices, getFigureFactory().makeEdgesSimpleList(points.size() - 1));
