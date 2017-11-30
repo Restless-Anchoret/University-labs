@@ -2,20 +2,24 @@ package com.ran.mtop;
 
 import com.ran.engine.algebra.vector.TwoDoubleVector;
 
-import java.util.function.BiFunction;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
-public class GradientDescent {
+public class GradientDescent2 {
 
-    private static final double DER_EPS = 1e-4;
+    private static final double DER_EPS_1 = 0.01;
+    private static final double DER_EPS_2 = 1e-4;
 
-    public Result findMaximum(BiFunction<Double, Double, Double> function,
+    public Result findMaximum(Function<TwoDoubleVector, Double> function,
                               double a10, double a20,
-                              double t1, double t2,
-                              double e, int maxIterations) {
+                              double tStart, double e, int maxIterations) {
         double a1 = a10;
         double a2 = a20;
         int iteration = 0;
-        double nextFunctionValue = function.apply(a1, a2);
+        double nextFunctionValue = function.apply(new TwoDoubleVector(a1, a2));
+        double t = tStart;
+        List<Double> values = new ArrayList<>();
 
         outer: while (true) {
             iteration++;
@@ -24,41 +28,54 @@ public class GradientDescent {
             }
             System.out.println("Iteration #" + iteration + ": a1 = " + a1 + "; a2 = " + a2);
 
+            if (iteration % 4 == 0) {
+                t *= 4.0;
+                t = Math.min(t, 5.0);
+            }
+
             double functionValue = nextFunctionValue;
             System.out.println("Function value: " + functionValue);
+            values.add(functionValue);
 
-            double functionValueA1Shift = function.apply(a1 + DER_EPS, a2);
-            double functionValueA2Shift = function.apply(a1, a2 + DER_EPS);
+            double functionValueA1Shift = function.apply(new TwoDoubleVector(a1 + DER_EPS_1, a2));
+            double functionValueA2Shift = function.apply(new TwoDoubleVector(a1, a2 + DER_EPS_2));
 //            System.out.println("Function value a1 shift: " + functionValueA1Shift);
 //            System.out.println("Function value a2 shift: " + functionValueA2Shift);
 
-            double derivativeA1 = (functionValueA1Shift - functionValue) / DER_EPS;
-            double derivativeA2 = (functionValueA2Shift - functionValue) / DER_EPS;
+            double derivativeA1 = (functionValueA1Shift - functionValue) / DER_EPS_1;
+            double derivativeA2 = (functionValueA2Shift - functionValue) / DER_EPS_2;
             System.out.println("Gradient: (" + derivativeA1 + ", " + derivativeA2 + ")");
 
             double gradientNorm = new TwoDoubleVector(derivativeA1, derivativeA2).getNorm();
             System.out.println("Gradient norm: " + gradientNorm);
             if (gradientNorm < e) {
+                System.out.println("Gradient is small, the end of cycle");
                 break;
             }
 
-            while (true) {
-                double a1next = a1 + t1 * derivativeA1;
-                double a2next = a2 + t2 * derivativeA2;
-                System.out.println("a1next = " + a1next + "; a2next = " + a2next);
-                if (!JFunctional.isA1Correct(a1next) || !JFunctional.isA2Correct(a2next)) {
-                    t1 /= 2.0;
-                    t2 /= 2.0;
-                    System.out.println("Incorrect values, decreasing t: t1 = " + t1 + ", t2 = " + t2);
+            if (values.size() >= 5 &&
+                    Math.abs(values.get(values.size() - 1) - values.get(values.size() - 5)) < e) {
+                System.out.println("Value changes insignificantly, the end of cycle");
+                break;
+            }
 
-                    if (t1 < 1e-20 || t2 < 1e-20) {
+//            double t = tStart;
+            while (true) {
+                double a1next = a1 + t * derivativeA1 / gradientNorm;
+                double a2next = a2 + t * derivativeA2 / gradientNorm;
+                System.out.println("a1next = " + a1next + "; a2next = " + a2next);
+                if (!JFunctional2.isA1Correct(a1next) || !JFunctional2.isA2Correct(a2next)) {
+                    t /= 2.0;
+                    System.out.println("Incorrect values, decreasing t: t = " + t);
+
+                    if (t < 1e-20) {
                         System.out.println("t became zero");
                         break outer;
                     }
                     continue;
                 }
 
-                nextFunctionValue = function.apply(a1next, a2next);
+                nextFunctionValue = function.apply(new TwoDoubleVector(a1next, a2next));
                 System.out.println("nextFunctionValue = " + nextFunctionValue);
 
                 if (nextFunctionValue > functionValue) {
@@ -66,18 +83,17 @@ public class GradientDescent {
                     a2 = a2next;
                     break;
                 } else {
-                    t1 /= 2.0;
-                    t2 /= 2.0;
-                    System.out.println("Too big t, decreasing: t1 = " + t1 + ", t2 = " + t2);
+                    t /= 2.0;
+                    System.out.println("Too big t, decreasing: t = " + t);
                 }
 
-                if (t1 < 1e-20 || t2 < 1e-20) {
+                if (t < 1e-20) {
                     System.out.println("t became zero");
                     break outer;
                 }
             }
 
-            System.out.println("t1 = " + t1 + "; t2 = " + t2);
+            System.out.println("tFinal = " + t);
             System.out.println();
         }
 
