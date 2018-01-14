@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="convnet-min.js" defer></script>
+    <script src="init.js" defer></script>
+    <script src="lab.js" defer></script>
+    <style>
+        canvas {
+            margin: 0.5em;
+            float: left;
+            box-sizing: border-box;
+            box-shadow: 0 0 1px gray;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+<canvas width=480 height=480 id="canvas"></canvas>
+<canvas width=32 height=32 id="canvas-small"></canvas>
+<div>
+    <!--<input type="text" id="url"/>-->
+    <input type="file" id="input"/>
+</div>
+<div>
+    <!--<input type="button" id="load-image" value="Загрузить картинку">-->
+    <input type="button" id="identify" value="Распознать">
+</div>
+<div id="output">
+</div>
+<!--<img id="image" src="picture.jpg" hidden="true"/>-->
+<!--<img id="image" src="pictures/cat-1.jpg"/>-->
+</body>
+
+</html>
