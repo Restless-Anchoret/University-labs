@@ -46,26 +46,40 @@ public class Algorithms {
             }
         }
         int t = (gmin + gmax) / 2;
-        BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D gr = image.createGraphics();
-        for (int i = 0; i < h; i++) {
-            for (int j = 0; j < w; j++) {
-                int rgb = sourceImage.getRGB(j, i);
-                Color color = getColor(rgb);
-                int grey = color.getRed();
-                int binary = (grey <= t ? 0 : 255);
-                Color binaryColor = new Color(binary, binary, binary);
-                gr.setColor(binaryColor);
-                gr.drawRect(j, i, 1, 1);
-            }
-        }
+        BufferedImage image = buildImageForBound(sourceImage, t);
         return new Result(image, t);
     }
     
     public static Result getBinaryImageByYannyMethod(BufferedImage sourceImage) {
         int w = sourceImage.getWidth(null);
         int h = sourceImage.getHeight(null);
-        return new Result(sourceImage, 0);
+        int gmin = 255;
+        int gmax = 0;
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                int rgb = sourceImage.getRGB(j, i);
+                Color color = getColor(rgb);
+                int grey = color.getRed();
+                gmin = Math.min(gmin, grey);
+                gmax = Math.max(gmax, grey);
+            }
+        }
+        int gmid = (gmin + gmax) / 2;
+        long allPixels = (long)w * (long)h;
+        long darkPixels = 0;
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                int rgb = sourceImage.getRGB(j, i);
+                Color color = getColor(rgb);
+                int grey = color.getRed();
+                if (grey <= gmid) {
+                    darkPixels++;
+                }
+            }
+        }
+        int t = gmin + (int)((gmax - gmin) * ((double)darkPixels / (double)allPixels));
+        BufferedImage image = buildImageForBound(sourceImage, t);
+        return new Result(image, t);
     }
     
     public static Result getBinaryImageByWatsuMethod(BufferedImage sourceImage) {
@@ -79,5 +93,24 @@ public class Algorithms {
         int green = (rgb & 0x0000ff00) >> 8;
         int blue  = rgb & 0x000000ff;
         return new Color(red, green, blue);
+    }
+    
+    private static BufferedImage buildImageForBound(BufferedImage sourceImage, int t) {
+        int w = sourceImage.getWidth(null);
+        int h = sourceImage.getHeight(null);
+        BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D gr = image.createGraphics();
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                int rgb = sourceImage.getRGB(j, i);
+                Color color = getColor(rgb);
+                int grey = color.getRed();
+                int binary = (grey <= t ? 0 : 255);
+                Color binaryColor = new Color(binary, binary, binary);
+                gr.setColor(binaryColor);
+                gr.drawRect(j, i, 1, 1);
+            }
+        }
+        return image;
     }
 }
