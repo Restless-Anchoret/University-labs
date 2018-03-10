@@ -57,7 +57,7 @@ public class LabFrame extends JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(loadButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textField, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)))
+                        .addComponent(textField, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -70,7 +70,7 @@ public class LabFrame extends JFrame {
                         .addComponent(loadButton)
                         .addComponent(textField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -84,14 +84,18 @@ public class LabFrame extends JFrame {
         try {
             BufferedImage originalImage = ImageIO.read(filePath.toFile());
             BufferedImage greyImage = Algorithms.getGreyImage(originalImage);
-            BufferedImage mediumImage = Algorithms.getBinaryImageByMediumMethod(greyImage);
-            BufferedImage yannyImage = Algorithms.getBinaryImageByYannyMethod(greyImage);
-            BufferedImage watsuImage = Algorithms.getBinaryImageByWatsuMethod(greyImage);
+            Result mediumImageResult = Algorithms.getBinaryImageByMediumMethod(greyImage);
+            Result yannyImageResult = Algorithms.getBinaryImageByYannyMethod(greyImage);
+            Result watsuImageResult = Algorithms.getBinaryImageByWatsuMethod(greyImage);
             originalImagePanel.setImage(originalImage);
             greyImagePanel.setImage(greyImage);
-            mediumImagePanel.setImage(mediumImage);
-            yannyImagePanel.setImage(yannyImage);
-            watsuImagePanel.setImage(watsuImage);
+            mediumImagePanel.setImage(mediumImageResult.getImage());
+            yannyImagePanel.setImage(yannyImageResult.getImage());
+            watsuImagePanel.setImage(watsuImageResult.getImage());
+            String message = "Порог метода среднего: " + mediumImageResult.getBound() +
+                    ", порог метода Янни: " + yannyImageResult.getBound() +
+                    ", порог метода Оцу: " + watsuImageResult.getBound() + ".";
+            textField.setText(message);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
