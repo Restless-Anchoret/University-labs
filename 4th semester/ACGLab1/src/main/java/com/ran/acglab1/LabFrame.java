@@ -1,6 +1,6 @@
 package com.ran.acglab1;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
 import javax.imageio.ImageIO;
@@ -16,6 +16,7 @@ public class LabFrame extends JFrame {
     
     public LabFrame() {
         initComponents();
+        
         tabbedPane.addTab("Оригинал", originalImagePanel);
         tabbedPane.addTab("Градации серого", greyImagePanel);
         tabbedPane.addTab("Метод среднего", mediumImagePanel);
@@ -56,7 +57,7 @@ public class LabFrame extends JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(loadButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textField, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)))
+                        .addComponent(textField, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -69,7 +70,7 @@ public class LabFrame extends JFrame {
                         .addComponent(loadButton)
                         .addComponent(textField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
+                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -81,11 +82,11 @@ public class LabFrame extends JFrame {
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
         Path filePath = fileBrowser.getFilePath();
         try {
-            Image originalImage = ImageIO.read(filePath.toFile());
-            Image greyImage = Algorithms.getGreyImage(originalImage);
-            Image mediumImage = Algorithms.getBinaryImageByMediumMethod(greyImage);
-            Image yannyImage = Algorithms.getBinaryImageByYannyMethod(greyImage);
-            Image watsuImage = Algorithms.getBinaryImageByWatsuMethod(greyImage);
+            BufferedImage originalImage = ImageIO.read(filePath.toFile());
+            BufferedImage greyImage = Algorithms.getGreyImage(originalImage);
+            BufferedImage mediumImage = Algorithms.getBinaryImageByMediumMethod(greyImage);
+            BufferedImage yannyImage = Algorithms.getBinaryImageByYannyMethod(greyImage);
+            BufferedImage watsuImage = Algorithms.getBinaryImageByWatsuMethod(greyImage);
             originalImagePanel.setImage(originalImage);
             greyImagePanel.setImage(greyImage);
             mediumImagePanel.setImage(mediumImage);

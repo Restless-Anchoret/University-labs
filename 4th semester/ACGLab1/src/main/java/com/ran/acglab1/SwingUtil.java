@@ -8,7 +8,7 @@ public class SwingUtil {
     
     public static JFileChooser getFileChooser() {
         if (fileChooser == null) {
-            fileChooser = new JFileChooser(System.getProperty("user.home"));
+            fileChooser = new JFileChooser("D:/Multimedia/Instagram photos");
         }
         return fileChooser;
     }
