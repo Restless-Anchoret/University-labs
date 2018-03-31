@@ -96,12 +96,12 @@ public class LabFrame extends JFrame {
             BufferedImage greyImage = Algorithms.getGreyImage(originalImage);
             Result watsuImageResult = Algorithms.getBinaryImageByWatsuMethod(greyImage);
             BufferedImage boxFilterImage = Algorithms.getImageWithAppliedBoxFilter(greyImage, 6);
-            BufferedImage gaussFilterImage = Algorithms.getImageWithAppliedGaussFilter(greyImage, 1);
+            BufferedImage gaussFilterImage = Algorithms.getImageWithAppliedGaussFilter(greyImage, 3);
             BufferedImage medianFilterImage = Algorithms.getImageWithAppliedMedianFilter(greyImage, 6);
-            BufferedImage dilatationImage = Algorithms.getDilatation(watsuImageResult.getImage(), 1);
-            BufferedImage erosionImage = Algorithms.getErosion(watsuImageResult.getImage(), 1);
-            BufferedImage closureImage = Algorithms.getClosure(watsuImageResult.getImage(), 1);
-            BufferedImage disjunctionImage = Algorithms.getDisjunction(watsuImageResult.getImage(), 1);
+            BufferedImage dilatationImage = Algorithms.getDilatation(watsuImageResult.getImage(), 2);
+            BufferedImage erosionImage = Algorithms.getErosion(watsuImageResult.getImage(), 2);
+            BufferedImage closureImage = Algorithms.getClosure(watsuImageResult.getImage(), 2);
+            BufferedImage disjunctionImage = Algorithms.getDisjunction(watsuImageResult.getImage(), 2);
             originalImagePanel.setImage(originalImage);
             greyImagePanel.setImage(greyImage);
             watsuImagePanel.setImage(watsuImageResult.getImage());

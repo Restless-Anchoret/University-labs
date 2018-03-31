@@ -27,7 +27,7 @@ public class Filters {
             for (int j = 0; j < n; j++) {
                 double x = j - c;
                 double y = i - c;
-                filter[i][j] = Math.exp((-x * x - y * y) / 2 * delta * delta) / (2.0 * Math.PI * delta * delta);
+                filter[i][j] = Math.exp(-(x * x + y * y) / (2.0 * delta * delta)) / Math.sqrt(2.0 * Math.PI * delta * delta);
                 sum += filter[i][j];
             }
         }

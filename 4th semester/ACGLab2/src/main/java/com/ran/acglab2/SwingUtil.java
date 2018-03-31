@@ -8,7 +8,7 @@ public class SwingUtil {
     
     public static JFileChooser getFileChooser() {
         if (fileChooser == null) {
-            fileChooser = new JFileChooser("D:\\Dropbox\\Repositories\\University-labs\\4th semester\\ACGLab2\\pictures");
+            fileChooser = new JFileChooser("D:\\Repositories\\University-labs\\4th semester\\ACGLab2\\pictures");
         }
         return fileChooser;
     }
