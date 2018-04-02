@@ -216,7 +216,144 @@ public class Algorithms {
     }
     
     public static BufferedImage getImageByKenniyMethod(BufferedImage image, int tMin, int tMax) {
-        // todo
-        return image;
+        int[][] imageMatrix = getImageAsMatrixOfGrey(image);
+        int[][] expandedMatrix = getExpandedImageMatrix(imageMatrix, 1);
+        int[][] gx = getImageMatrixWithAppliedFilter(expandedMatrix, Filters.gx());
+        int[][] gy = getImageMatrixWithAppliedFilter(expandedMatrix, Filters.gy());
+        int[][] g = calculateG(gx, gy);
+        int[][] theta = calculateTheta(gx, gy);
+        int[][] expandedG = getExpandedImageMatrix(g, 1);
+        int[][] updatedG = removeNotMaximums(expandedG, theta);
+        int[][] zeroOneMatrix = calculateZeroOneMatrix(updatedG, tMin, tMax);
+        int[][] finalMatrix = removeUnknown(zeroOneMatrix);
+        convertZeroOneToWhiteBlack(finalMatrix);
+        return createGreyImageForMatrix(finalMatrix);
+    }
+    
+    private static int[][] calculateG(int[][] gx, int[][] gy) {
+        int w = gx[0].length;
+        int h = gx.length;
+        int[][] g = new int[h][w];
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                g[i][j] = (int)Math.round(Math.sqrt(gx[i][j] * gx[i][j] + gy[i][j] * gy[i][j]));
+            }
+        }
+        return g;
+    }
+    
+    private static int[][] calculateTheta(int[][] gx, int[][] gy) {
+        int w = gx[0].length;
+        int h = gx.length;
+        int[][] theta = new int[h][w];
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                double angle = Math.atan2(gy[i][j], gx[i][j]);
+                if (angle < -7.0 * Math.PI / 8.0) {
+                    theta[i][j] = 0;
+                } else if (angle < -5.0 * Math.PI / 8.0) {
+                    theta[i][j] = 45;
+                } else if (angle < -3.0 * Math.PI / 8.0) {
+                    theta[i][j] = 90;
+                } else if (angle < -Math.PI / 8.0) {
+                    theta[i][j] = 135;
+                } else if (angle < Math.PI / 8.0) {
+                    theta[i][j] = 0;
+                } else if (angle < 3.0 * Math.PI / 8.0) {
+                    theta[i][j] = 45;
+                } else if (angle < 5.0 * Math.PI / 8.0) {
+                    theta[i][j] = 90;
+                } else if (angle < 7.0 * Math.PI / 8.0) {
+                    theta[i][j] = 135;
+                } else {
+                    theta[i][j] = 0;
+                }
+            }
+        }
+        return theta;
+    }
+    
+    private static int[][] removeNotMaximums(int[][] g, int[][] theta) {
+        int w = theta[0].length;
+        int h = theta.length;
+        int[][] newMatrix = new int[h][w];
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                newMatrix[i][j] = g[i + 1][j + 1];
+                if (theta[i][j] == 0 && (newMatrix[i][j] < g[i + 1][j] || newMatrix[i][j] < g[i + 1][j + 2])) {
+                    newMatrix[i][j] = 0;
+                }
+                if (theta[i][j] == 45 && (newMatrix[i][j] < g[i][j] || newMatrix[i][j] < g[i + 2][j + 2])) {
+                    newMatrix[i][j] = 0;
+                }
+                if (theta[i][j] == 90 && (newMatrix[i][j] < g[i][j + 1] || newMatrix[i][j] < g[i + 2][j + 1])) {
+                    newMatrix[i][j] = 0;
+                }
+                if (theta[i][j] == 135 && (newMatrix[i][j] < g[i][j + 2] || newMatrix[i][j] < g[i + 2][j])) {
+                    newMatrix[i][j] = 0;
+                }
+            }
+        }
+        return newMatrix;
+    }
+    
+    private static int[][] calculateZeroOneMatrix(int[][] g, int tMin, int tMax) {
+        int w = g[0].length;
+        int h = g.length;
+        int[][] newMatrix = new int[h][w];
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                if (g[i][j] < tMin) {
+                    newMatrix[i][j] = 0;
+                } else if (g[i][j] > tMax) {
+                    newMatrix[i][j] = 1;
+                } else {
+                    newMatrix[i][j] = -1;
+                }
+            }
+        }
+        return newMatrix;
+    }
+    
+    private static int[][] removeUnknown(int[][] matrix) {
+        int w = matrix[0].length;
+        int h = matrix.length;
+        int[][] newMatrix = new int[h][w];
+        boolean[][] visited = new boolean[h][w];
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                if (!visited[i][j] && matrix[i][j] == 1) {
+                    dfs(matrix, newMatrix, visited, i, j);
+                }
+            }
+        }
+        return newMatrix;
+    }
+    
+    private static void dfs(int[][] matrix, int[][] newMatrix, boolean[][] visited, int i, int j) {
+        visited[i][j] = true;
+        newMatrix[i][j] = 1;
+        if (i > 0 && !visited[i - 1][j] && Math.abs(matrix[i - 1][j]) == 1) {
+            dfs(matrix, newMatrix, visited, i - 1, j);
+        }
+        if (i < matrix.length - 1 && !visited[i + 1][j] && Math.abs(matrix[i + 1][j]) == 1) {
+            dfs(matrix, newMatrix, visited, i + 1, j);
+        }
+        if (j > 0 && !visited[i][j - 1] && Math.abs(matrix[i][j - 1]) == 1) {
+            dfs(matrix, newMatrix, visited, i, j - 1);
+        }
+        if (j < matrix[0].length - 1 && !visited[i][j + 1] && Math.abs(matrix[i][j + 1]) == 1) {
+            dfs(matrix, newMatrix, visited, i, j + 1);
+        }
+    }
+    
+    private static void convertZeroOneToWhiteBlack(int[][] matrix) {
+        int w = matrix[0].length;
+        int h = matrix.length;
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                matrix[i][j] = (matrix[i][j] == 0 ? 255 : 0);
+            }
+        }
     }
 }

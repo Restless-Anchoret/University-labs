@@ -24,4 +24,20 @@ public class Filters {
         }
         return filter;
     }
+    
+    public static double[][] gx() {
+        return new double[][] {
+            new double[] { -1, 0, 1 },
+            new double[] { -2, 0, 2 },
+            new double[] { -1, 0, 1 }
+        };
+    }
+    
+    public static double[][] gy() {
+        return new double[][] {
+            new double[] { -1, -2, -1 },
+            new double[] { 0, 0, 0 },
+            new double[] { 1, 2, 1 }
+        };
+    }
 }
