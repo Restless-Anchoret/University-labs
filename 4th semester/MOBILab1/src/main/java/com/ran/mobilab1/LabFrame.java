@@ -106,7 +106,7 @@ public class LabFrame extends JFrame {
             }
         });
 
-        quadraticResidueButton.setText("Quadratic Residue");
+        quadraticResidueButton.setText("Quadratic residues");
         quadraticResidueButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quadraticResidueButtonActionPerformed(evt);

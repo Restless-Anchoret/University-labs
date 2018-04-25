@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Calculator {
     
@@ -80,7 +81,20 @@ public class Calculator {
     }
     
     public String quadraticResidue(Input input) {
-        return "error";
+        Set<Long> residues = new TreeSet<>();
+        for (long i = 1; i <= (input.getN().longValue() - 1) / 2; i++) {
+            BigInteger value = BigInteger.valueOf(i);
+            BigInteger square = value.multiply(value);
+            residues.add(square.mod(input.getN()).longValue());
+        }
+        StringBuilder builder = new StringBuilder();
+        residues.forEach(number -> {
+            if (builder.length() > 0) {
+                builder.append(", ");
+            }
+            builder.append(number);
+        });
+        return builder.toString();
     }
     
     private BigInteger getEilerFunctionValue(BigInteger n, Map<BigInteger, Long> primeDivisors) {
