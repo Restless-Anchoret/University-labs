@@ -56,11 +56,21 @@ public class Calculator {
     
     public String degree(Input input) {
         BigInteger a = input.getA().mod(input.getN());
-        return degreeBinary(a, input.getN(), input.getN()).toString();
+        return degreeBinary(a, input.getB(), input.getN()).toString();
     }
     
     public String sqrt(Input input) {
-        return "error";
+        BigInteger a = input.getA().mod(input.getN());
+        BigInteger value = BigInteger.ZERO;
+        while (!value.multiply(value).mod(input.getN()).equals(a) &&
+                value.add(BigInteger.ONE).compareTo(input.getN()) < 0) {
+            value = value.add(BigInteger.ONE);
+        }
+        if (value.multiply(value).mod(input.getN()).equals(a)) {
+            return value.toString();
+        } else {
+            return "does not exist";
+        }
     }
     
     public String multiplication(Input input) {
@@ -74,7 +84,7 @@ public class Calculator {
         Map<BigInteger, Long> aPrimeDivisors = getPrimeDivisors(input.getA());
         Map<BigInteger, Long> nPrimeDivisors = getPrimeDivisors(input.getN());
         if (containSameKey(aPrimeDivisors, nPrimeDivisors)) {
-            return "error";
+            return "does not exist";
         }
         BigInteger eilerFunctionValue = getEilerFunctionValue(input.getN(), nPrimeDivisors);
         return degreeBinary(a, eilerFunctionValue.subtract(BigInteger.ONE), input.getN()).toString();
@@ -101,13 +111,11 @@ public class Calculator {
         if (primeDivisors == null) {
             primeDivisors = getPrimeDivisors(n);
         }
-        System.out.println(primeDivisors);
         BigInteger result = BigInteger.ONE;
         for (Map.Entry<BigInteger, Long> entry: primeDivisors.entrySet()) {
             BigInteger value = degreeBinary(entry.getKey(), entry.getValue() - 1);
             result = result.multiply(value.multiply(entry.getKey()).subtract(value));
         }
-        System.out.println(result);
         return result;
     }
     
