@@ -30,17 +30,15 @@ public class LabFrame extends JFrame {
         substractButton = new javax.swing.JButton();
         degreeButton = new javax.swing.JButton();
         sqrtButton = new javax.swing.JButton();
-        multiplicationButton = new javax.swing.JButton();
         reverseButton = new javax.swing.JButton();
-        quadraticResidueButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        nTextField.setText("7");
+        nTextField.setText("65478");
 
-        aTextField.setText("5");
+        aTextField.setText("4582");
 
-        bTextField.setText("3");
+        bTextField.setText("45968");
 
         nLabel.setText("mod(n)");
 
@@ -50,66 +48,52 @@ public class LabFrame extends JFrame {
 
         resultTextField.setEditable(false);
 
-        modButton.setText("Mod:  a mod (n)");
+        modButton.setText("a mod(n)");
         modButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modButtonActionPerformed(evt);
             }
         });
 
-        equalButton.setText("Equality:  a = b (mod n)");
+        equalButton.setText("a==b mod(n)");
         equalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 equalButtonActionPerformed(evt);
             }
         });
 
-        sumButton.setText("Sum:  (a + b) mod n");
+        sumButton.setText("(a+b) mod(n)");
         sumButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sumButtonActionPerformed(evt);
             }
         });
 
-        substractButton.setText("Subtraction:  (a - b) mod n");
+        substractButton.setText("(a-b) mod(n)");
         substractButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 substractButtonActionPerformed(evt);
             }
         });
 
-        degreeButton.setText("Degree:  (a ^ b) mod n");
+        degreeButton.setText("(a^b) mod(n)");
         degreeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 degreeButtonActionPerformed(evt);
             }
         });
 
-        sqrtButton.setText("Sqrt:  sqrt(a) mod n");
+        sqrtButton.setText("sqrt(a) mod(n)");
         sqrtButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sqrtButtonActionPerformed(evt);
             }
         });
 
-        multiplicationButton.setText("Multiplication:  (a * b) mod n");
-        multiplicationButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                multiplicationButtonActionPerformed(evt);
-            }
-        });
-
-        reverseButton.setText("Inversion:  (a ^ -1) mod n");
+        reverseButton.setText("a^(-1) mod(n)");
         reverseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reverseButtonActionPerformed(evt);
-            }
-        });
-
-        quadraticResidueButton.setText("Quadratic residues");
-        quadraticResidueButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                quadraticResidueButtonActionPerformed(evt);
             }
         });
 
@@ -118,46 +102,40 @@ public class LabFrame extends JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(resultTextField)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(modButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(substractButton, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(reverseButton, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                            .addComponent(equalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(degreeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sumButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sqrtButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(61, 61, 61)
                                 .addComponent(nLabel)
-                                .addGap(176, 176, 176)
+                                .addGap(145, 145, 145)
                                 .addComponent(aLabel))
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(nTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(aTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(5, 5, 5)
+                                .addComponent(aTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
+                                .addGap(56, 56, 56)
                                 .addComponent(bLabel))
-                            .addComponent(bTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(resultTextField)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(multiplicationButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(substractButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(modButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(equalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(degreeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(reverseButton, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(sumButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(sqrtButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(quadraticResidueButton, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))))))
-                .addContainerGap())
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,10 +163,7 @@ public class LabFrame extends JFrame {
                     .addComponent(degreeButton)
                     .addComponent(sqrtButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(multiplicationButton)
-                    .addComponent(reverseButton)
-                    .addComponent(quadraticResidueButton))
+                .addComponent(reverseButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -219,17 +194,9 @@ public class LabFrame extends JFrame {
         operation(calculator::sqrt);
     }//GEN-LAST:event_sqrtButtonActionPerformed
 
-    private void multiplicationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplicationButtonActionPerformed
-        operation(calculator::multiplication);
-    }//GEN-LAST:event_multiplicationButtonActionPerformed
-
     private void reverseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reverseButtonActionPerformed
         operation(calculator::reverse);
     }//GEN-LAST:event_reverseButtonActionPerformed
-
-    private void quadraticResidueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quadraticResidueButtonActionPerformed
-        operation(calculator::quadraticResidue);
-    }//GEN-LAST:event_quadraticResidueButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel aLabel;
@@ -239,10 +206,8 @@ public class LabFrame extends JFrame {
     private javax.swing.JButton degreeButton;
     private javax.swing.JButton equalButton;
     private javax.swing.JButton modButton;
-    private javax.swing.JButton multiplicationButton;
     private javax.swing.JLabel nLabel;
     private javax.swing.JTextField nTextField;
-    private javax.swing.JButton quadraticResidueButton;
     private javax.swing.JTextField resultTextField;
     private javax.swing.JButton reverseButton;
     private javax.swing.JButton sqrtButton;

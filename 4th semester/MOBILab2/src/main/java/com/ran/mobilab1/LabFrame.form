@@ -23,60 +23,53 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="resultTextField" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="modButton" max="32767" attributes="0"/>
+                          <Component id="substractButton" pref="128" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="reverseButton" pref="127" max="32767" attributes="0"/>
+                          <Component id="equalButton" max="32767" attributes="0"/>
+                          <Component id="degreeButton" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="sumButton" max="32767" attributes="0"/>
+                          <Component id="sqrtButton" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                               <Component id="nLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
                               <Component id="aLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="nTextField" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="nTextField" min="-2" pref="126" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="aTextField" min="-2" pref="195" max="-2" attributes="0"/>
+                              <Component id="aTextField" min="-2" pref="125" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                               <Component id="bLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="bTextField" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="resultTextField" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="multiplicationButton" alignment="0" pref="200" max="32767" attributes="0"/>
-                                  <Component id="substractButton" max="32767" attributes="0"/>
-                                  <Component id="modButton" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="equalButton" max="32767" attributes="0"/>
-                                  <Component id="degreeButton" max="32767" attributes="0"/>
-                                  <Component id="reverseButton" pref="201" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="sumButton" max="32767" attributes="0"/>
-                                  <Component id="sqrtButton" max="32767" attributes="0"/>
-                                  <Component id="quadraticResidueButton" alignment="0" pref="217" max="32767" attributes="0"/>
-                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="bTextField" min="-2" pref="124" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -110,11 +103,7 @@
                   <Component id="sqrtButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="multiplicationButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="reverseButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="quadraticResidueButton" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="reverseButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -123,17 +112,17 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="nTextField">
       <Properties>
-        <Property name="text" type="java.lang.String" value="7"/>
+        <Property name="text" type="java.lang.String" value="65478"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="aTextField">
       <Properties>
-        <Property name="text" type="java.lang.String" value="5"/>
+        <Property name="text" type="java.lang.String" value="4582"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="bTextField">
       <Properties>
-        <Property name="text" type="java.lang.String" value="3"/>
+        <Property name="text" type="java.lang.String" value="45968"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="nLabel">
@@ -158,7 +147,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="modButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mod:  a mod (n)"/>
+        <Property name="text" type="java.lang.String" value="a mod(n)"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modButtonActionPerformed"/>
@@ -166,7 +155,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="equalButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Equality:  a = b (mod n)"/>
+        <Property name="text" type="java.lang.String" value="a==b mod(n)"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="equalButtonActionPerformed"/>
@@ -174,7 +163,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="sumButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Sum:  (a + b) mod n"/>
+        <Property name="text" type="java.lang.String" value="(a+b) mod(n)"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sumButtonActionPerformed"/>
@@ -182,7 +171,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="substractButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Subtraction:  (a - b) mod n"/>
+        <Property name="text" type="java.lang.String" value="(a-b) mod(n)"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="substractButtonActionPerformed"/>
@@ -190,7 +179,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="degreeButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Degree:  (a ^ b) mod n"/>
+        <Property name="text" type="java.lang.String" value="(a^b) mod(n)"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="degreeButtonActionPerformed"/>
@@ -198,34 +187,18 @@
     </Component>
     <Component class="javax.swing.JButton" name="sqrtButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Sqrt:  sqrt(a) mod n"/>
+        <Property name="text" type="java.lang.String" value="sqrt(a) mod(n)"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sqrtButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="multiplicationButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Multiplication:  (a * b) mod n"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="multiplicationButtonActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="reverseButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Inversion:  (a ^ -1) mod n"/>
+        <Property name="text" type="java.lang.String" value="a^(-1) mod(n)"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reverseButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="quadraticResidueButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Quadratic residues"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quadraticResidueButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
