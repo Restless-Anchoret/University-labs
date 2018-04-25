@@ -9,6 +9,7 @@ public class LabFrame extends JFrame {
     private Calculator calculator = new Calculator();
     
     public LabFrame() {
+        calculator.evaluatePrimeNumbers();
         initComponents();
     }
 
@@ -257,9 +258,11 @@ public class LabFrame extends JFrame {
             BigInteger a = new BigInteger(aTextField.getText());
             BigInteger b = new BigInteger(bTextField.getText());
             Input input = new Input(a, b, n);
+            input.validate();
             String result = function.apply(input);
             resultTextField.setText(result);
         } catch (Exception ex) {
+            ex.printStackTrace();
             resultTextField.setText("error");
         }
     }

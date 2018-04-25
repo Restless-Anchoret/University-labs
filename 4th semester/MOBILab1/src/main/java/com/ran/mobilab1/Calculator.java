@@ -1,8 +1,35 @@
 package com.ran.mobilab1;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Calculator {
+    
+    private static final int PRIME_NUMBERS_BOUND = 10_000_000;
+    
+    private List<BigInteger> primeNumbers = new ArrayList<>();
+    
+    public void evaluatePrimeNumbers() {
+        boolean[] isPrime = new boolean[PRIME_NUMBERS_BOUND + 1];
+        Arrays.fill(isPrime, true);
+        isPrime[0] = isPrime[1] = false;
+        
+        for (int i = 2; i <= PRIME_NUMBERS_BOUND; i++) {
+            if (isPrime[i]) {
+                long j = (long)i * (long)i;
+                while (j <= PRIME_NUMBERS_BOUND) {
+                    isPrime[(int)j] = false;
+                    j += i;
+                }
+                primeNumbers.add(BigInteger.valueOf(i));
+            }
+        }
+    }
 
     public String mod(Input input) {
         return input.getA().mod(input.getN()).toString();
@@ -28,8 +55,7 @@ public class Calculator {
     
     public String degree(Input input) {
         BigInteger a = input.getA().mod(input.getN());
-        BigInteger b = input.getB().mod(input.getN());
-        return degreeBinary(a, b, input.getN()).toString();
+        return degreeBinary(a, input.getN(), input.getN()).toString();
     }
     
     public String sqrt(Input input) {
@@ -43,11 +69,32 @@ public class Calculator {
     }
     
     public String reverse(Input input) {
-        return "error";
+        BigInteger a = input.getA().mod(input.getN());
+        Map<BigInteger, Long> aPrimeDivisors = getPrimeDivisors(input.getA());
+        Map<BigInteger, Long> nPrimeDivisors = getPrimeDivisors(input.getN());
+        if (containSameKey(aPrimeDivisors, nPrimeDivisors)) {
+            return "error";
+        }
+        BigInteger eilerFunctionValue = getEilerFunctionValue(input.getN(), nPrimeDivisors);
+        return degreeBinary(a, eilerFunctionValue.subtract(BigInteger.ONE), input.getN()).toString();
     }
     
     public String quadraticResidue(Input input) {
         return "error";
+    }
+    
+    private BigInteger getEilerFunctionValue(BigInteger n, Map<BigInteger, Long> primeDivisors) {
+        if (primeDivisors == null) {
+            primeDivisors = getPrimeDivisors(n);
+        }
+        System.out.println(primeDivisors);
+        BigInteger result = BigInteger.ONE;
+        for (Map.Entry<BigInteger, Long> entry: primeDivisors.entrySet()) {
+            BigInteger value = degreeBinary(entry.getKey(), entry.getValue() - 1);
+            result = result.multiply(value.multiply(entry.getKey()).subtract(value));
+        }
+        System.out.println(result);
+        return result;
     }
     
     private BigInteger degreeBinary(BigInteger a, BigInteger b, BigInteger n) {
@@ -62,6 +109,54 @@ public class Calculator {
             BigInteger value = degreeBinary(a, b.subtract(BigInteger.ONE), n);
             return value.multiply(a).mod(n);
         }
+    }
+    
+    private BigInteger degreeBinary(BigInteger a, long b) {
+        if (b == 0) {
+            return BigInteger.ONE;
+        } else if (b == 1) {
+            return a;
+        } else if (b % 2 == 0) {
+            BigInteger value = degreeBinary(a, b / 2);
+            return value.multiply(value);
+        } else {
+            BigInteger value = degreeBinary(a, b - 1);
+            return value.multiply(a);
+        }
+    }
+    
+    private Map<BigInteger, Long> getPrimeDivisors(BigInteger number) {
+        BigInteger currentValue = number;
+        Map<BigInteger, Long> primeDivisors = new HashMap<>();
+        for (BigInteger divisor: primeNumbers) {
+            BigInteger square = divisor.multiply(divisor);
+            if (square.compareTo(number) > 0) {
+                break;
+            }
+            while (currentValue.mod(divisor).equals(BigInteger.ZERO)) {
+                currentValue = currentValue.divide(divisor);
+                incrementValueInMap(primeDivisors, divisor);
+            }
+        }
+        if (currentValue.compareTo(BigInteger.ONE) > 0) {
+            incrementValueInMap(primeDivisors, currentValue);
+        }
+        return primeDivisors;
+    }
+    
+    private void incrementValueInMap(Map<BigInteger, Long> map, BigInteger key) {
+        if (map.containsKey(key)) {
+            map.put(key, map.get(key) + 1);
+        } else {
+            map.put(key, 1L);
+        }
+    }
+    
+    private boolean containSameKey(Map<BigInteger, Long> a, Map<BigInteger, Long> b) {
+        Set<BigInteger> aSet = a.keySet();
+        Set<BigInteger> bSet = b.keySet();
+        aSet.retainAll(bSet);
+        return !aSet.isEmpty();
     }
 }
 
@@ -101,5 +196,13 @@ class Input {
     @Override
     public String toString() {
         return "Input{" + "a=" + a + ", b=" + b + ", n=" + n + '}';
+    }
+    
+    public void validate() {
+        if (n.compareTo(BigInteger.ZERO) <= 0 ||
+                a.compareTo(BigInteger.ZERO) < 0 ||
+                b.compareTo(BigInteger.ZERO) <= 0) {
+            throw new RuntimeException("Invalid input!");
+        }
     }
 }
