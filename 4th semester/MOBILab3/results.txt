@@ -1,0 +1,189 @@
+First algorithm.
+
+Step #0, n = 0
+Time for n = 0: 0; result: 2
+
+Step #1, n = 40000
+Time for n = 40000: 62; result: 341
+
+Step #2, n = 80000
+Time for n = 80000: 62; result: 35
+
+Step #3, n = 120000
+Time for n = 120000: 47; result: 698
+
+Step #4, n = 160000
+Time for n = 160000: 32; result: 579
+
+Step #5, n = 200000
+Time for n = 200000: 46; result: 307
+
+Step #6, n = 240000
+Time for n = 240000: 63; result: 205
+
+Step #7, n = 280000
+Time for n = 280000: 62; result: 647
+
+Step #8, n = 320000
+Time for n = 320000: 94; result: 341
+
+Step #9, n = 360000
+Time for n = 360000: 94; result: 35
+
+Step #10, n = 400000
+Time for n = 400000: 109; result: 698
+
+Step #11, n = 440000
+Time for n = 440000: 125; result: 579
+
+Step #12, n = 480000
+Time for n = 480000: 110; result: 307
+
+Step #13, n = 520000
+Time for n = 520000: 125; result: 205
+
+Step #14, n = 560000
+Time for n = 560000: 157; result: 647
+
+Step #15, n = 600000
+Time for n = 600000: 110; result: 341
+
+Step #16, n = 640000
+Time for n = 640000: 110; result: 35
+
+Step #17, n = 680000
+Time for n = 680000: 125; result: 698
+
+Step #18, n = 720000
+Time for n = 720000: 125; result: 579
+
+Step #19, n = 760000
+Time for n = 760000: 125; result: 307
+
+Step #20, n = 800000
+Time for n = 800000: 140; result: 205
+
+Step #21, n = 840000
+Time for n = 840000: 156; result: 647
+
+Step #22, n = 880000
+Time for n = 880000: 157; result: 341
+
+Step #23, n = 920000
+Time for n = 920000: 203; result: 35
+
+Step #24, n = 960000
+Time for n = 960000: 156; result: 698
+
+Step #25, n = 1000000
+Time for n = 1000000: 234; result: 579
+
+Step #26, n = 1040000
+Time for n = 1040000: 187; result: 307
+
+Step #27, n = 1080000
+Time for n = 1080000: 219; result: 205
+
+Step #28, n = 1120000
+Time for n = 1120000: 235; result: 647
+
+Step #29, n = 1160000
+Time for n = 1160000: 219; result: 341
+
+Step #30, n = 1200000
+Time for n = 1200000: 203; result: 35
+
+Step #31, n = 1240000
+Time for n = 1240000: 219; result: 698
+
+Step #32, n = 1280000
+Time for n = 1280000: 234; result: 579
+
+Step #33, n = 1320000
+Time for n = 1320000: 250; result: 307
+
+Step #34, n = 1360000
+Time for n = 1360000: 250; result: 205
+
+Step #35, n = 1400000
+Time for n = 1400000: 265; result: 647
+
+Step #36, n = 1440000
+Time for n = 1440000: 266; result: 341
+
+Step #37, n = 1480000
+Time for n = 1480000: 282; result: 35
+
+Step #38, n = 1520000
+Time for n = 1520000: 281; result: 698
+
+Step #39, n = 1560000
+Time for n = 1560000: 297; result: 579
+
+Step #40, n = 1600000
+Time for n = 1600000: 359; result: 307
+
+Step #41, n = 1640000
+Time for n = 1640000: 343; result: 205
+
+Step #42, n = 1680000
+Time for n = 1680000: 328; result: 647
+
+Step #43, n = 1720000
+Time for n = 1720000: 343; result: 341
+
+Step #44, n = 1760000
+Time for n = 1760000: 344; result: 35
+
+Step #45, n = 1800000
+Time for n = 1800000: 328; result: 698
+
+Step #46, n = 1840000
+Time for n = 1840000: 344; result: 579
+
+Step #47, n = 1880000
+Time for n = 1880000: 375; result: 307
+
+Step #48, n = 1920000
+Time for n = 1920000: 375; result: 205
+
+Step #49, n = 1960000
+Time for n = 1960000: 359; result: 647
+
+Step #50, n = 2000000
+Time for n = 2000000: 390; result: 341
+
+Second algorithm.
+
+Step #0, n = 0
+Time for n = 0: 0; result: 2
+
+Step #1, n = 4000
+Time for n = 4000: 125; result: 307
+
+Step #2, n = 8000
+Time for n = 8000: 485; result: 698
+
+Step #3, n = 12000
+Time for n = 12000: 953; result: 341
+
+Step #4, n = 16000
+Time for n = 16000: 1656; result: 205
+
+Step #5, n = 20000
+Time for n = 20000: 2625; result: 579
+
+Step #6, n = 24000
+Time for n = 24000: 3719; result: 35
+
+Step #7, n = 28000
+Time for n = 28000: 5016; result: 647
+
+Step #8, n = 32000
+Time for n = 32000: 6609; result: 307
+
+Step #9, n = 36000
+Time for n = 36000: 8281; result: 698
+
+Step #10, n = 40000
+Time for n = 40000: 10281; result: 341

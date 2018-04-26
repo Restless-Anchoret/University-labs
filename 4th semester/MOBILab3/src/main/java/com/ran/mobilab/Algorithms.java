@@ -9,22 +9,6 @@ public class Algorithms {
     
     private static final long A = 2;
     private static final long N = 1003;
-   
-//    public List<Result> algorithmTest(
-//            Function<BigInteger, Long> algorithm,
-//            BigInteger from, BigInteger to, int steps) {
-//        List<Result> result = new ArrayList<>();
-//        BigInteger step = to.subtract(from).divide(BigInteger.valueOf(steps));
-//        for (int i = 0; i <= steps; i++) {
-//            System.out.println("Step #" + i);
-//            BigInteger degree = from.add(step.multiply(BigInteger.valueOf(i)));
-//            long time = algorithm.apply(degree);
-//            System.out.println("Time for step #" + i + ": " + time);
-//            System.out.println();
-//            result.add(new Result(degree, time));
-//        }
-//        return result;
-//    }
     
     public List<Result> algorithmTest(
             Function<BigInteger, Result> algorithm,
@@ -33,10 +17,10 @@ public class Algorithms {
         int step = (to - from) / steps;
         for (int i = 0; i <= steps; i++) {
             int order = from + step * i;
-            System.out.println("Step #" + i + ", order = " + order);
+            System.out.println("Step #" + i + ", n = " + order);
             BigInteger degree = BigInteger.valueOf(10).pow(order);
             Result result = algorithm.apply(degree);
-            System.out.println("Time for step #" + i + ": " + result.getTime() + "; value: " + result.getValue());
+            System.out.println("Time for n = " + order + ": " + result.getTime() + "; result: " + result.getValue());
             System.out.println();
             results.add(result);
         }
