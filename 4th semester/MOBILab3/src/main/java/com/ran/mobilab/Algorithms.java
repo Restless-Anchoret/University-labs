@@ -7,8 +7,8 @@ import java.util.function.Function;
 
 public class Algorithms {
     
-    private static final long A = 2;
-    private static final long N = 1003;
+    private static final long A = 3;
+    private static final long N = 423656;
     
     public List<Result> algorithmTest(
             Function<BigInteger, Result> algorithm,
